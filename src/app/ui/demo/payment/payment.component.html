@@ -1,0 +1,91 @@
+<div class="p-4 pt-5 rounded-3xl bg-white z-30 w-full relative h-full">
+  <h2 class="text-3xl font-bold mb-6 flex justify-between">
+    Pay
+    <div class="relative z-50" *ngIf="!waiting">
+      <div
+        class="h-9 p-2 px-4 rounded-xl shadow-md flex items-center justify-center text-sm cursor-pointer"
+        (click)="showCurrencyPicker = !showCurrencyPicker"
+      >
+        {{ demoService.currency.code }}
+      </div>
+      <div
+        class="absolute top-full right-0 bg-white shadow-md text-sm rounded-xl p-2"
+        *ngIf="showCurrencyPicker"
+      >
+        <ul class="p-0 m-0 list-none">
+          <li
+            class="px-3 py-2 hover:bg-blue-200 cursor-pointer rounded-xl"
+            *ngFor="let currency of demoService.currencies; let i = index"
+            (click)="demoService.setCurrency(i); showCurrencyPicker = false"
+          >
+            {{ currency.code }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="waiting"
+      class="w-9 h-9 p-2 bg-indigo-600 rounded-full flex items-center justify-center"
+    >
+      <div class="w-9 h-1 bg-white animate-spin rounded-lg"></div>
+    </div>
+  </h2>
+
+  <div
+    class="px-6 py-6 shadow-md rounded-lg mb-6"
+    *ngIf="paymentMock as payment"
+  >
+    <h3 class="mb-1 text-sm text-slate-400">Buying</h3>
+
+    <p
+      class="mb-3 text-lg items-center flex font-bold text-slate-500"
+      *ngFor="let item of payment.items"
+    >
+      {{ item.name }}
+    </p>
+
+    <h3 class="mb-1 text-sm text-slate-400">Total</h3>
+
+    <p
+      class="items-center flex text-slate-500"
+      *ngFor="let total of payment.totals"
+      [ngClass]="{
+        'text-2xl font-bold': total.keyCurrency,
+        'text-sm': !total.keyCurrency
+      }"
+    >
+      <ng-container *ngIf="!total.keyCurrency">(</ng-container>
+      {{ total.amount | currency: total.currency || demoService.currency.code }}
+      <ng-container *ngIf="!total.keyCurrency">)</ng-container>
+    </p>
+  </div>
+
+  <div class="px-6 py-6 shadow-md rounded-lg mb-6">
+    <h3 class="mb-1 text-sm text-slate-400">Wallet balance</h3>
+    <p
+      class="text-2xl items-center flex font-bold"
+      [ngClass]="{
+        'text-slate-500': this.demoService.balance == 0,
+        'text-green-500': this.demoService.balance > 0,
+        'text-red-500': this.demoService.balance < 0
+      }"
+    >
+      {{ this.demoService.balance | currency: demoService.currency.code }}
+    </p>
+  </div>
+
+  <button
+    (click)="openTransferModal($event)"
+    class="px-8 py-4 justify-center w-full flex bg-blue-600 text-white uppercase hover:shadow-xl font-bold items-center rounded-xl mb-6 cursor-pointer"
+  >
+    Pay
+  </button>
+
+  <button
+    *ngIf="showRestart"
+    (click)="restart($event)"
+    class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl absolute bottom-0 right-0"
+  >
+    Restart
+  </button>
+</div>

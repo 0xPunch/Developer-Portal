@@ -1,0 +1,44 @@
+<p
+  class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse font-medium"
+  *ngIf="!running || running == ''"
+>
+  {{ initializing ? "Initializing" : "Loading demo ... " }}
+</p>
+
+<!-- container -->
+<div class="overflow-hidden h-full block" *ngIf="running && running != ''">
+  <app-auth
+    class="h-full block"
+    *ngIf="running == demos.auth"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></app-auth>
+
+  <app-create-account
+    class="h-full block"
+    *ngIf="running == demos.createUser"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></app-create-account>
+
+  <app-banks
+    class="h-full block"
+    *ngIf="running == demos.banks"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></app-banks>
+
+  <app-wallet
+    class="h-full block"
+    *ngIf="running == demos.wallet"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></app-wallet>
+
+  <app-payment
+    class="h-full block"
+    *ngIf="running == demos.payment"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></app-payment>
+</div>
