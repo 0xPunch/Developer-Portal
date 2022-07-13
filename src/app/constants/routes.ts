@@ -33,11 +33,4 @@ export const asideRoutes: IRoute[] = [
     external: false,
     module: 'settings',
   },
-  {
-    name: 'discord',
-    label: 'Discord',
-    path: 'https://discord.gg/UszSDsQf',
-    show: true,
-    external: true,
-  },
 ];
