@@ -33,7 +33,7 @@
 
   <div
     class="px-6 py-6 shadow-md rounded-lg mb-6"
-    *ngIf="paymentMock as payment"
+    *ngIf="!showConfirmation && paymentMock as payment"
   >
     <h3 class="mb-1 text-sm text-slate-400">Buying</h3>
 
@@ -60,7 +60,7 @@
     </p>
   </div>
 
-  <div class="px-6 py-6 shadow-md rounded-lg mb-6">
+  <div class="px-6 py-6 shadow-md rounded-lg mb-6" *ngIf="!showConfirmation">
     <h3 class="mb-1 text-sm text-slate-400">Wallet balance</h3>
     <p
       class="text-2xl items-center flex font-bold"
@@ -74,8 +74,53 @@
     </p>
   </div>
 
+  <div
+    class="px-6 py-6 shadow-md rounded-lg mb-6"
+    *ngIf="showConfirmation && paymentMock as payment"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 stroke-green-500 scale-[3] mb-10 mx-auto"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+      />
+    </svg>
+
+    <h3 class="mb-1 text-sm text-slate-400">Confirmation</h3>
+    <p
+      class="mb-3 text-lg items-center flex font-bold text-slate-500"
+      *ngFor="let item of payment.items"
+    >
+      {{ item.name }}
+    </p>
+
+    <h3 class="mb-1 text-sm text-slate-400">Total</h3>
+
+    <p
+      class="items-center flex text-slate-500"
+      *ngFor="let total of payment.totals"
+      [ngClass]="{
+        'text-2xl font-bold': total.keyCurrency,
+        'text-sm': !total.keyCurrency
+      }"
+    >
+      <ng-container *ngIf="!total.keyCurrency">(</ng-container>
+      {{ total.amount | currency: total.currency || demoService.currency.code }}
+      <ng-container *ngIf="!total.keyCurrency">)</ng-container>
+    </p>
+  </div>
+
   <button
-    (click)="openTransferModal($event)"
+    *ngIf="!showConfirmation"
+    (click)="pay($event)"
+    [disabled]="waiting"
     class="px-8 py-4 justify-center w-full flex bg-blue-600 text-white uppercase hover:shadow-xl font-bold items-center rounded-xl mb-6 cursor-pointer"
   >
     Pay

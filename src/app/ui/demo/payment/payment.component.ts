@@ -14,11 +14,10 @@ export class PaymentComponent implements OnInit {
   public waiting = false;
   public authorized = false;
   public showRestart = false;
-  public allowSeamless = true;
-  public showTransfer = false;
   public transferAmount = 0;
   public showCurrencyPicker = false;
   public paymentMock = PaymentMock;
+  public showConfirmation = false;
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -26,19 +25,35 @@ export class PaymentComponent implements OnInit {
 
   constructor(public demoService: DemoService) {}
 
-  public cancelTransfer = () => {
-    this.showTransfer = false;
-  };
-
-  public openTransferModal = ($event: Event) => {
+  public pay = ($event: Event) => {
     $event.preventDefault();
-    this.showTransfer = true;
+    this.waiting = true;
+    const sendingPayment: IConsoleEvent = {
+      message: 'Executing payment',
+      type: ConsoleEventTypes.apiCall,
+      id: uuidv4(),
+    };
+
+    this.consoleEvent.emit(sendingPayment);
+
+    setTimeout(() => {
+      const sendingPaymentComplete: IConsoleEvent = {
+        message: 'Payment complete',
+        type: ConsoleEventTypes.success,
+        id: uuidv4(),
+      };
+      this.showConfirmation = true;
+      this.waiting = false;
+      this.showRestart = true;
+      this.consoleEvent.emit(sendingPaymentComplete);
+    }, 2000);
   };
 
   public restart = ($event: Event) => {
     $event.preventDefault();
     this.waiting = false;
     this.showRestart = false;
+    this.showConfirmation = false;
     const restart: IConsoleEvent = {
       message: 'Restarting',
       type: ConsoleEventTypes.restart,
