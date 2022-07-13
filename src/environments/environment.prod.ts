@@ -16,7 +16,7 @@ export const environment = {
       allowedList: [
         {
           // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-          uri: 'http://localhost:5000/v1/*',
+          uri: 'https://api.peyya.io/v1/*',
           tokenOptions: {
             // The attached token should target this audience
             audience: 'https://dev-ibqj5g5m.us.auth0.com/api/v2/',
