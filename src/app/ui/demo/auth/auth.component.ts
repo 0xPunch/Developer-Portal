@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { ApplicationService } from 'src/app/services/applications.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IEmulator } from 'src/app/models/emulator';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ConsoleEventTypes, IConsoleEvent } from 'src/app/models/console';
 import { v4 as uuidv4 } from 'uuid';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -13,12 +15,29 @@ export class AuthComponent implements OnInit {
   public authPhone = null;
   public phoneError = '';
   public waiting = false;
+  public showRestart = false;
   public authorized = false;
+  public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, public appService: ApplicationService) {}
+
+  public handleAuthError = (error: HttpErrorResponse) => {
+    return throwError(() => {
+      this.showRestart = true;
+      const authFailed: IConsoleEvent = {
+        message: 'Auth failed',
+        type: ConsoleEventTypes.error,
+        id: uuidv4(),
+        data: error,
+      };
+      this.waiting = false;
+      this.consoleEvent.emit(authFailed);
+      this.error$.next('Could not authorize');
+    });
+  };
 
   public authorizing = () => {
     const endpoint = this.config?.config?.ApiEndpoints?.['auth'];
@@ -36,11 +55,23 @@ export class AuthComponent implements OnInit {
     };
 
     this.consoleEvent.emit(authorizingEvent);
-
+    const app = this.appService.applicationBehavior$.value;
+    const { client_id, client_secret } = app;
+    debugger;
     this.http
-      .post(full, {
-        phoneNumber: this.authPhone,
-      })
+      .post(
+        full,
+        {
+          phoneNumber: this.authPhone,
+        },
+        {
+          headers: {
+            client_id,
+            client_secret,
+          },
+        }
+      )
+      .pipe(catchError(this.handleAuthError))
       .subscribe((data) => {
         this.authorized = true;
         this.waiting = false;
@@ -57,6 +88,8 @@ export class AuthComponent implements OnInit {
   public restart = ($event: Event) => {
     $event.preventDefault();
     this.authorized = false;
+    this.showRestart = false;
+    this.error$.next(null);
     const restart: IConsoleEvent = {
       message: 'Restarting',
       type: ConsoleEventTypes.restart,

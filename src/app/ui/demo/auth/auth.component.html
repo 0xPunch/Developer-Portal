@@ -16,6 +16,13 @@
       />
     </div>
 
+    <div
+      *ngIf="error$ | async as error"
+      class="p-3 bg-red-500 text-white rounded-xl"
+    >
+      {{ error }}
+    </div>
+
     <div class="flex flex-row-reverse mt-10">
       <button
         *ngIf="!waiting"
@@ -52,12 +59,13 @@
   <ng-container *ngIf="authorized">
     <p class="font-bold text-2xl mb-8 text-lime-500">Success!</p>
     <p>You're now authorized.</p>
-
-    <button
-      (click)="restart($event)"
-      class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl absolute bottom-0 right-0"
-    >
-      Restart
-    </button>
   </ng-container>
+
+  <button
+    *ngIf="showRestart"
+    (click)="restart($event)"
+    class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl absolute bottom-0 right-0"
+  >
+    Restart
+  </button>
 </div>

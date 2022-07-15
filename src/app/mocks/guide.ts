@@ -88,7 +88,7 @@ export const GuideGoodToKnowSegmentMock = (
 
 export const GuideAuthSegmentMock = (config: IGuideConfig): IGuideSegment => {
   return {
-    headline: 'Authenticate user',
+    headline: 'Authenticate by mobile',
     text: 'Authenitcating a user will return a token, this token is needed in every request. The token includes your client id. And will only work for that application. If a user doesn´t exists, a new user will be created. Important to follow the format of "+nn nn nnnnnnn" Next step is to complete user account. See "complete new user"segment',
     hideInNav: false,
     components: [
@@ -102,7 +102,7 @@ export const GuideCompleteAccountSegmentMock = (
   config: IGuideConfig
 ): IGuideSegment => {
   return {
-    headline: 'Complete new user',
+    headline: 'KYC',
     text: 'You need to complete your account to do any further actions. \n Complete your account by calling user endpoint with your {peyyaUserId}. In your body you need to pass {firstName} and {lastName}. You´ll always need your {authToken} in your headers. See example below.',
     hideInNav: false,
     components: [
@@ -170,13 +170,26 @@ export const GuideTransferBankSegmentMock = (
   config: IGuideConfig
 ): IGuideSegment => {
   return {
-    headline: 'Transfer to wallet',
-    text: 'Make a seamless transfer to your wallet. You will be able to setup rules.',
+    headline: 'Top up wallet',
+    text: 'Make a seamless transfer between your wallet and your bank. You will be able to setup rules.',
     hideInNav: false,
     components: [
       GuideWalletCodeComponent(config),
       GuideWalletEmulatorComponent(config),
     ],
+  };
+};
+
+// Send money
+
+export const GuideSendMoneySegmentMock = (
+  config: IGuideConfig
+): IGuideSegment => {
+  return {
+    headline: 'Send money',
+    text: 'Send money to a wallet or iban',
+    hideInNav: false,
+    components: [],
   };
 };
 
@@ -223,6 +236,7 @@ export const GuideMock = (config: IGuideConfig): IGuide => {
       GuideCompleteAccountSegmentMock(config),
       GuideConnectBankSegmentMock(config),
       GuideTransferBankSegmentMock(config),
+      GuideSendMoneySegmentMock(config),
       GuideCreatePaymentSegmentMock(config),
     ],
   };
