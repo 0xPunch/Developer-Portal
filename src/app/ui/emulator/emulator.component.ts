@@ -1,3 +1,4 @@
+import { DemoService } from 'src/app/services/demo.service';
 import { ConsoleEventTypes, IConsoleEvent } from 'src/app/models/console';
 import { IEmulator } from './../../models/emulator';
 import { BehaviorSubject } from 'rxjs';
@@ -29,10 +30,13 @@ export class EmulatorComponent implements OnInit {
   public eventTypes = ConsoleEventTypes;
   public demo: IDemo = { name: undefined };
   public consoleEvents: IConsoleEvent[] = [];
+  public activeConsoleTab = 'calls';
 
   public showApiCalls$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  public showApiConsole$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   public handleConsoleEvents = (event: IConsoleEvent) => {
     if (event.type === ConsoleEventTypes.restart) {
@@ -64,17 +68,17 @@ export class EmulatorComponent implements OnInit {
         localStorage.setItem(this.config.segment, 'true');
       }
     }
-    this.showApiCalls$.next(!this.showApiCalls$.value);
+    this.showApiConsole$.next(!this.showApiConsole$.value);
   };
 
-  constructor() {}
+  constructor(public demoService: DemoService) {}
 
   ngOnInit() {
     if (this.config.segment) {
       this.demo = { name: this.config.segment };
-      const showApiCalls = localStorage.getItem(this.config.segment);
-      if (showApiCalls) {
-        this.showApiCalls$.next(true);
+      const showApiConsole = localStorage.getItem(this.config.segment);
+      if (showApiConsole) {
+        this.showApiConsole$.next(true);
       }
     }
   }

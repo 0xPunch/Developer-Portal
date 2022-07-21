@@ -19,9 +19,38 @@
 
   <div
     class="absolute left-80 w-full max-w-md h-5/6 translate-x-4 top-0 bg-slate-800 dark:bg-slate-900 p-4 rounded-3xl animation-bounce-short"
-    *ngIf="showApiCalls$ | async"
+    *ngIf="showApiConsole$ | async"
   >
-    <div class="overflow-x-auto h-full" #calls>
+    <div class="w-full flex flex-row gap-4 mb-4">
+      <div
+        class="flex items-center justify-center rounded-full text-white cursor-pointer py-2 w-full"
+        [ngClass]="{
+          'bg-transparent': activeConsoleTab == 'calls',
+          'bg-slate-700': activeConsoleTab != 'calls'
+        }"
+        (click)="activeConsoleTab = 'calls'"
+      >
+        Calls
+      </div>
+      <div
+        class="flex items-center justify-center rounded-full bg-slate-700 text-white cursor-pointer py-2 w-full"
+        [ngClass]="{
+          'bg-transparent': activeConsoleTab == 'state',
+          'bg-slate-700': activeConsoleTab != 'state'
+        }"
+        (click)="activeConsoleTab = 'state'"
+      >
+        State
+      </div>
+    </div>
+
+    <!-- Calls -->
+
+    <div
+      class="overflow-x-auto h-full"
+      #calls
+      *ngIf="activeConsoleTab == 'calls'"
+    >
       <p
         class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse font-medium text-slate-600"
         *ngIf="!consoleEvents.length"
@@ -80,6 +109,30 @@
           <p *ngIf="!event.data">No further information</p>
         </div>
       </div>
+    </div>
+
+    <!-- State -->
+    <div
+      class="overflow-x-auto h-full flex flex-col gap-3"
+      *ngIf="activeConsoleTab == 'state'"
+    >
+      <ng-container *ngIf="demoService.getState() | async as state">
+        <div
+          class="flex flex-row gap-5 items-center hover:bg-cyan-800 rounded-xl p-2 text-sm font-medium"
+          *ngFor="let stateProp of state | keyvalue"
+        >
+          <label class="dark:text-slate-400 w-20">{{ stateProp.key }}</label>
+          <p class="text-cyan-500 overflow-hidden text-ellipsis">
+            {{ stateProp.value }}
+          </p>
+          <!-- <input
+            type="text"
+            [value]="stateProp.value"
+            (input)="updateState($event, stateProp.key)"
+            class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800 dark:text-slate-300"
+          /> -->
+        </div>
+      </ng-container>
     </div>
   </div>
 

@@ -13,10 +13,4 @@ export const ApplicationSections: ISection[] = [
     module: 'api-guide',
     moduleName: 'ApiGuideModule',
   },
-  {
-    name: 'state',
-    path: 'state',
-    module: 'section-state',
-    moduleName: 'StateModule',
-  },
 ];
