@@ -31,6 +31,7 @@ export class EmulatorComponent implements OnInit {
   public demo: IDemo = { name: undefined };
   public consoleEvents: IConsoleEvent[] = [];
   public activeConsoleTab = 'calls';
+  public togglee: { [key: string]: boolean } = {};
 
   public showApiCalls$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false

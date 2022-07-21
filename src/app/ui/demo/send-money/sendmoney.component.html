@@ -55,46 +55,28 @@
         'bg-blue-600 text-white': demo.getStateProp('transferType') == 'crypto'
       }"
     >
-      Crypto
+      Peyya
     </button>
   </div>
-  <label class="mb-2 block font-medium dark:text-slate-300">Amount</label>
+  <label class="mb-2 block font-medium">Amount</label>
   <input
     type="number"
     placeholder="Amount"
     class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
   />
+  <ng-container *ngIf="demo.getStateProp('transferType') == 'crypto'">
+    <label class="mb-2 block font-medium">Peyya wallet</label>
+    <input
+      type="tel"
+      placeholder="PhoneNr or PeyyaID"
+      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+    />
+  </ng-container>
   <ng-container *ngIf="demo.getStateProp('transferType') == 'iban'">
-    <label class="mb-2 block font-medium dark:text-slate-300"
-      >Iban number</label
-    >
+    <label class="mb-2 block font-medium">Iban</label>
     <input
-      type="string"
-      placeholder="Iban"
-      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
-    />
-    <label class="mb-2 block font-medium dark:text-slate-300">Country</label>
-    <select
-      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
-      [(ngModel)]="recipientCountry"
-    >
-      <option [value]="'Select recipient country'" selected disabled>
-        Select recipient country
-      </option>
-      <option *ngFor="let country of countries | keyvalue" [value]="country">
-        {{ country.value.name }}
-      </option>
-    </select>
-    <label class="mb-2 block font-medium dark:text-slate-300">First name</label>
-    <input
-      type="string"
-      placeholder="First name"
-      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
-    />
-    <label class="mb-2 block font-medium dark:text-slate-300">Last name</label>
-    <input
-      type="string"
-      placeholder="Last name"
+      type="tel"
+      placeholder="Iban number"
       class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
     />
   </ng-container>

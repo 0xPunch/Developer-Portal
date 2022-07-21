@@ -68,6 +68,7 @@ export class BanksComponent implements OnInit {
         const banksResult = data as BanksResult;
         this.waiting = false;
         this.banks$.next(banksResult.banks);
+        this.demoService.updateState({ banks: banksResult.banks });
         const gettingBanksDone: IConsoleEvent = {
           message: 'Banks fetched complete',
           type: ConsoleEventTypes.success,

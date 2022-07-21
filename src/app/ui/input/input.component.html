@@ -1,0 +1,30 @@
+<label class="mb-2 block font-medium">Iban number</label>
+<input
+  type="string"
+  placeholder="Iban"
+  class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+/>
+<label class="mb-2 block font-medium">Country</label>
+<select
+  class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+  [(ngModel)]="recipientCountry"
+>
+  <option [value]="'Select recipient country'" selected disabled>
+    Select recipient country
+  </option>
+  <option *ngFor="let country of countries | keyvalue" [value]="country">
+    {{ country.value.name }}
+  </option>
+</select>
+<label class="mb-2 block font-medium">First name</label>
+<input
+  type="string"
+  placeholder="First name"
+  class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+/>
+<label class="mb-2 block font-medium">Last name</label>
+<input
+  type="string"
+  placeholder="Last name"
+  class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+/>

@@ -18,7 +18,7 @@
   </div>
 
   <div
-    class="absolute left-80 w-full max-w-md h-5/6 translate-x-4 top-0 bg-slate-800 dark:bg-slate-900 p-4 rounded-3xl animation-bounce-short"
+    class="absolute left-80 w-full max-w-md h-5/6 translate-x-4 top-0 bg-slate-800 dark:bg-slate-900 p-4 rounded-3xl animate-console"
     *ngIf="showApiConsole$ | async"
   >
     <!-- tabs -->
@@ -119,12 +119,22 @@
     >
       <ng-container *ngIf="demoService.getState() | async as state">
         <div
-          class="flex flex-row gap-5 items-center hover:bg-cyan-800 rounded-xl p-2 text-sm font-medium"
+          class="flex flex-row gap-5 hover:bg-cyan-800 rounded-xl p-2 text-sm font-medium cursor-pointer"
           *ngFor="let stateProp of state | keyvalue"
+          (click)="togglee[stateProp.key] = !togglee[stateProp.key]"
         >
           <label class="dark:text-slate-400 w-20">{{ stateProp.key }}</label>
-          <p class="text-cyan-500 overflow-hidden text-ellipsis">
-            {{ stateProp.value }}
+          <p
+            class="text-cyan-500 overflow-hidden text-ellipsis"
+            *ngIf="!togglee[stateProp.key]"
+          >
+            {{ stateProp.value | json | slice: 0:50 }}
+          </p>
+          <p
+            class="text-cyan-500 overflow-hidden text-ellipsis"
+            *ngIf="togglee[stateProp.key]"
+          >
+            {{ stateProp.value | json }}
           </p>
           <!-- <input
             type="text"
