@@ -21,12 +21,13 @@
     class="absolute left-80 w-full max-w-md h-5/6 translate-x-4 top-0 bg-slate-800 dark:bg-slate-900 p-4 rounded-3xl animation-bounce-short"
     *ngIf="showApiConsole$ | async"
   >
+    <!-- tabs -->
     <div class="w-full flex flex-row gap-4 mb-4">
       <div
         class="flex items-center justify-center rounded-full text-white cursor-pointer py-2 w-full"
         [ngClass]="{
-          'bg-transparent': activeConsoleTab == 'calls',
-          'bg-slate-700': activeConsoleTab != 'calls'
+          'bg-transparent': activeConsoleTab != 'calls',
+          'bg-slate-700': activeConsoleTab == 'calls'
         }"
         (click)="activeConsoleTab = 'calls'"
       >
@@ -35,8 +36,8 @@
       <div
         class="flex items-center justify-center rounded-full bg-slate-700 text-white cursor-pointer py-2 w-full"
         [ngClass]="{
-          'bg-transparent': activeConsoleTab == 'state',
-          'bg-slate-700': activeConsoleTab != 'state'
+          'bg-transparent': activeConsoleTab != 'state',
+          'bg-slate-700': activeConsoleTab == 'state'
         }"
         (click)="activeConsoleTab = 'state'"
       >
