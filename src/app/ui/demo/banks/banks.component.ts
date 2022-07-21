@@ -59,6 +59,9 @@ export class BanksComponent implements OnInit {
       .request({
         method: DemoRequestMethods.GET,
         endpoint: `${ApiHost}${ApiEndpoints.banks}?isoCountry=SE`,
+        headers: {
+          Authorization: this.demoService.getStateProp('authToken') || '',
+        },
       })
       .pipe(catchError(this.handleGettingBanksError))
       .subscribe((data) => {

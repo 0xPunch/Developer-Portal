@@ -41,4 +41,11 @@
     [config]="config"
     (consoleEvent)="handleConsoleEvents($event)"
   ></app-payment>
+
+  <demo-sendmoney
+    class="h-full block"
+    *ngIf="running == demos.sendmoney"
+    [config]="config"
+    (consoleEvent)="handleConsoleEvents($event)"
+  ></demo-sendmoney>
 </div>

@@ -4,4 +4,5 @@ export enum Demos {
   banks = 'banks',
   wallet = 'wallet',
   payment = 'payment',
+  sendmoney = 'sendmoney',
 }

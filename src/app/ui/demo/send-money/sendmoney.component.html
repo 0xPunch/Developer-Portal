@@ -1,0 +1,116 @@
+<div
+  class="p-4 pt-10 rounded-3xl bg-white z-30 w-full relative h-full overflow-y-auto"
+>
+  <h2 class="text-3xl font-bold mb-12 flex justify-between">
+    Send
+    <div class="relative z-50" *ngIf="!waiting">
+      <div
+        class="h-9 p-2 px-4 rounded-xl shadow-md flex items-center justify-center text-sm cursor-pointer"
+        (click)="showCurrencyPicker = !showCurrencyPicker"
+      >
+        {{ demo.currency.code }}
+      </div>
+      <div
+        class="absolute top-full right-0 bg-white shadow-md text-sm rounded-xl p-2"
+        *ngIf="showCurrencyPicker"
+      >
+        <ul class="p-0 m-0 list-none">
+          <li
+            class="px-3 py-2 hover:bg-blue-200 cursor-pointer rounded-xl"
+            *ngFor="let currency of demo.currencies; let i = index"
+            (click)="demo.setCurrency(i); showCurrencyPicker = false"
+          >
+            {{ currency.code }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      *ngIf="waiting"
+      class="w-9 h-9 p-2 bg-indigo-600 rounded-full flex items-center justify-center"
+    >
+      <div class="w-9 h-1 bg-white animate-spin rounded-lg"></div>
+    </div>
+  </h2>
+
+  <h3 class="mb-3 text-sm text-slate-400">Your balance</h3>
+  <p class="mb-6 font-bold text-slate-500">
+    {{ this.demo.balance | currency: demo.currency.code }}
+  </p>
+
+  <div class="flex flex-row gap-4">
+    <button
+      (click)="demo.updateState({ transferType: 'iban' })"
+      class="px-8 py-4 justify-center w-full flex bg-blue-600 text-white uppercase hover:shadow-xl font-bold items-center rounded-xl mb-6 cursor-pointer"
+      [ngClass]="{
+        'bg-blue-600 text-white': demo.getStateProp('transferType') == 'iban'
+      }"
+    >
+      Iban
+    </button>
+    <button
+      (click)="demo.updateState({ transferType: 'crypto' })"
+      class="px-8 py-4 justify-center w-full flex uppercase hover:shadow-xl font-bold items-center rounded-xl mb-6 cursor-pointer"
+      [ngClass]="{
+        'bg-blue-600 text-white': demo.getStateProp('transferType') == 'crypto'
+      }"
+    >
+      Crypto
+    </button>
+  </div>
+  <label class="mb-2 block font-medium dark:text-slate-300">Amount</label>
+  <input
+    type="number"
+    placeholder="Amount"
+    class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+  />
+  <ng-container *ngIf="demo.getStateProp('transferType') == 'iban'">
+    <label class="mb-2 block font-medium dark:text-slate-300"
+      >Iban number</label
+    >
+    <input
+      type="string"
+      placeholder="Iban"
+      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+    />
+    <label class="mb-2 block font-medium dark:text-slate-300">Country</label>
+    <select
+      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+      [(ngModel)]="recipientCountry"
+    >
+      <option [value]="'Select recipient country'" selected disabled>
+        Select recipient country
+      </option>
+      <option *ngFor="let country of countries | keyvalue" [value]="country">
+        {{ country.value.name }}
+      </option>
+    </select>
+    <label class="mb-2 block font-medium dark:text-slate-300">First name</label>
+    <input
+      type="string"
+      placeholder="First name"
+      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+    />
+    <label class="mb-2 block font-medium dark:text-slate-300">Last name</label>
+    <input
+      type="string"
+      placeholder="Last name"
+      class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
+    />
+  </ng-container>
+
+  <button
+    *ngIf="showRestart"
+    (click)="restart($event)"
+    class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl absolute bottom-0 right-0"
+  >
+    Restart
+  </button>
+
+  <div
+    class="p-3 bg-red-500 text-white rounded-xl mb-4 animate-slidein z-50 absolute bottom-0"
+    *ngIf="transferError"
+  >
+    {{ transferError }}
+  </div>
+</div>

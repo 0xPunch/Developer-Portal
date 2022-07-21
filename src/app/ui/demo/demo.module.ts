@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { BanksModule } from './banks/banks.module';
 import { WalletModule } from './wallet/wallet.module';
 import { PaymentModule } from './payment/payment.module';
+import { SendMoneyModule } from './send-money/sendmoney.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PaymentModule } from './payment/payment.module';
     BanksModule,
     WalletModule,
     PaymentModule,
+    SendMoneyModule,
   ],
   declarations: [DemoComponent],
   exports: [DemoComponent],

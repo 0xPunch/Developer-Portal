@@ -20,6 +20,8 @@
     "@angular/router": "^14.0.3",
     "@auth0/auth0-angular": "^1.9.0",
     "@skalenetwork/filestorage.js": "^1.0.1-develop.5",
+    "axios": "^0.27.2",
+    "countries-list": "^2.6.1",
     "highlightjs-line-numbers.js": "^2.8.0",
     "ngx-highlightjs": "^6.1.2",
     "rxjs": "~7.4.0",

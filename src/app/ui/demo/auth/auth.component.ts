@@ -1,3 +1,4 @@
+import { DemoService } from 'src/app/services/demo.service';
 import { ApplicationService } from 'src/app/services/applications.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IEmulator } from 'src/app/models/emulator';
@@ -22,7 +23,11 @@ export class AuthComponent implements OnInit {
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
 
-  constructor(public http: HttpClient, public appService: ApplicationService) {}
+  constructor(
+    public http: HttpClient,
+    public appService: ApplicationService,
+    public demo: DemoService
+  ) {}
 
   public handleAuthError = (error: HttpErrorResponse) => {
     return throwError(() => {
@@ -35,7 +40,7 @@ export class AuthComponent implements OnInit {
       };
       this.waiting = false;
       this.consoleEvent.emit(authFailed);
-      this.error$.next('Could not authorize');
+      this.error$.next('Could not authorize: ' + error.error.error);
     });
   };
 
@@ -57,7 +62,6 @@ export class AuthComponent implements OnInit {
     this.consoleEvent.emit(authorizingEvent);
     const app = this.appService.applicationBehavior$.value;
     const { client_id, client_secret } = app;
-    debugger;
     this.http
       .post(
         full,
@@ -72,7 +76,7 @@ export class AuthComponent implements OnInit {
         }
       )
       .pipe(catchError(this.handleAuthError))
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.authorized = true;
         this.waiting = false;
         const authorizingDone: IConsoleEvent = {
@@ -82,6 +86,7 @@ export class AuthComponent implements OnInit {
           data,
         };
         this.consoleEvent.emit(authorizingDone);
+        this.demo.updateState({ authToken: data?.token });
       });
   };
 

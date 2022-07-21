@@ -46,3 +46,12 @@ export const EmulatorPaymentMock = (config: IGuideConfig): IEmulator => {
     config,
   };
 };
+
+export const EmulatorSendMoneyMock = (config: IGuideConfig): IEmulator => {
+  return {
+    name: 'Send money',
+    toggleApi: true,
+    segment: Demos.sendmoney,
+    config,
+  };
+};

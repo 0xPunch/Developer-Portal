@@ -1,3 +1,4 @@
+import { DemoService } from 'src/app/services/demo.service';
 import { UiService } from 'src/app/services/ui.service';
 import {
   GuideComponentTypes,
@@ -27,7 +28,7 @@ export class ApiGuideComponent implements OnInit {
     }
   };
 
-  constructor(public ui: UiService) {}
+  constructor(public ui: UiService, public demo: DemoService) {}
 
   ngOnInit() {}
 }

@@ -22,21 +22,52 @@ export interface DemoRequest {
   providedIn: 'root',
 })
 export class DemoService implements OnDestroy {
-  private banksSub$: Subscription | undefined;
-  private banksBehavior$: BehaviorSubject<any> | undefined;
-
   public currency = currencies[0];
   public currencies = currencies;
   public balance = walletBalance;
 
+  /**
+   * Demo state.
+   * This will handle all data for all the demos.
+   */
+  private _state$: BehaviorSubject<{ [key: string]: any }> =
+    new BehaviorSubject<{ [key: string]: any }>({
+      transferType: 'iban',
+    });
+
+  public getState = () => this._state$.asObservable();
+  public getStateProp = (key: string) => this._state$.value[key];
+  public updateState = (patch: any) =>
+    this._state$.next({ ...this._state$.value, ...patch });
+  public clearState = () => this._state$.next({});
+
+  /**
+   * Update methods for demos that needs to set currency and balance.
+   * These will update the demo state.
+   */
+
   public setCurrency = (idx: number) => {
+    /**
+     * TODO: Remove the global state and only use updateState
+     */
     this.currency = this.currencies[idx];
+    this.updateState({ currency: this.currency });
   };
   public setBalance = (amount: number) => {
+    /**
+     * TODO: Remove the global state and only use updateState
+     */
     this.balance = amount;
+    this.updateState({ balance: this.balance });
   };
 
-  public handleError = (error: HttpErrorResponse) => {
+  /**
+   * Request. Here we define demo request. These are a little different from "normal" request.
+   * These will use demo state auth token.
+   *
+   */
+
+  private handleError = (error: HttpErrorResponse) => {
     return throwError(() => {
       console.error(error);
     });
@@ -57,15 +88,7 @@ export class DemoService implements OnDestroy {
     }
   };
 
-  public getBanks = () => {
-    return this.http.get(`${ApiHost}${ApiEndpoints.wallet}/0/wallet/1/banks`);
-  };
-
-  ngOnDestroy() {
-    if (this.banksSub$) {
-      this.banksSub$.unsubscribe();
-    }
-  }
+  ngOnDestroy() {}
 
   constructor(public http: HttpClient, public router: Router) {}
 }

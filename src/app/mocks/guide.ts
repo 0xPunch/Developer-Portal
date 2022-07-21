@@ -11,6 +11,7 @@ import {
   EmulatorPickBankMock,
   EmulatorWalletTransferMock,
   EmulatorPaymentMock,
+  EmulatorSendMoneyMock,
 } from './emulator';
 import {
   CodeConnectBankMock,
@@ -182,6 +183,15 @@ export const GuideTransferBankSegmentMock = (
 
 // Send money
 
+export const GuideSendMoneyEmulatorComponent = (
+  config: IGuideConfig
+): IGuideComponent => {
+  return {
+    type: GuideComponentTypes.emulator,
+    config: EmulatorSendMoneyMock(config),
+  };
+};
+
 export const GuideSendMoneySegmentMock = (
   config: IGuideConfig
 ): IGuideSegment => {
@@ -189,7 +199,7 @@ export const GuideSendMoneySegmentMock = (
     headline: 'Send money',
     text: 'Send money to a wallet or iban',
     hideInNav: false,
-    components: [],
+    components: [GuideSendMoneyEmulatorComponent(config)],
   };
 };
 
