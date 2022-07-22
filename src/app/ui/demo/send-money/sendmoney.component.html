@@ -60,12 +60,21 @@
     </button>
   </div>
   <label class="mb-2 block font-medium">Amount</label>
-  <input
-    type="number"
-    placeholder="Amount"
-    [(ngModel)]="transactionAmount"
-    class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none"
-  />
+
+  <div class="flex flex-row gap-3 mb-4">
+    <input
+      type="number"
+      placeholder="Amount"
+      [(ngModel)]="transactionAmount"
+      class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none"
+    />
+    <div
+      class="p-3 rounded-md bg-slate-300 text-white hover:shadow-lg cursor-pointer"
+      (click)="maxOut()"
+    >
+      MAX
+    </div>
+  </div>
   <ng-container *ngIf="demo.getStateProp('transactionType') == 'peyya'">
     <label class="mb-2 block font-medium">Peyya wallet</label>
     <input

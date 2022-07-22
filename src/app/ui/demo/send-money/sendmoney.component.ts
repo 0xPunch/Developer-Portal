@@ -38,6 +38,8 @@ export class SendMoneyComponent implements OnInit {
 
   constructor(public http: HttpClient, public demo: DemoService) {}
 
+  public maxOut = () => (this.transactionAmount = this.demo.balance);
+
   public cancelTransaction = () => {
     this.showTransaction = false;
   };
@@ -79,6 +81,7 @@ export class SendMoneyComponent implements OnInit {
 
   public transaction = async ($event: Event) => {
     $event.preventDefault();
+    const curreny = this.demo.currency.code;
     const transactionId = uuidv4();
     const allowSeamless = this.demo.getStateProp('allowSeamless');
     this.transactionError = null;
@@ -108,6 +111,7 @@ export class SendMoneyComponent implements OnInit {
       id: uuidv4(),
       data: {
         amount: this.transactionAmount,
+        curreny,
         type: this.demo.getStateProp('transactionType'),
         target:
           this.demo.getStateProp('transactionType') === 'peyya'
@@ -134,6 +138,7 @@ export class SendMoneyComponent implements OnInit {
         data: {
           transactionId,
           amount: this.transactionAmount,
+          curreny,
           balance: this.demo.balance,
           type: this.demo.getStateProp('transactionType'),
           target:
