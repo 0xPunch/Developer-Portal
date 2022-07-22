@@ -23,12 +23,14 @@ export class SendMoneyComponent implements OnInit {
   public authorized = false;
   public showRestart = false;
   public allowSeamless = true;
-  public showTransfer = false;
-  public transferAmount = 0;
+  public showTransaction = false;
+  public transactionAmount = 0;
   public showCurrencyPicker = false;
-  public transferError: string | null = null;
+  public transactionError: string | null = null;
   public countries = countries;
   public recipientCountry: any = 'Select recipient country';
+  public walletOrPeyyaId: any;
+  public iban: any;
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -36,54 +38,114 @@ export class SendMoneyComponent implements OnInit {
 
   constructor(public http: HttpClient, public demo: DemoService) {}
 
-  public cancelTransfer = () => {
-    this.showTransfer = false;
+  public cancelTransaction = () => {
+    this.showTransaction = false;
   };
 
   public openTransferModal = ($event: Event) => {
     $event.preventDefault();
-    this.showTransfer = true;
+    this.showTransaction = true;
   };
 
-  public transfer = ($event: Event) => {
-    $event.preventDefault();
-    this.transferError = null;
-
-    if (this.transferAmount <= 0) {
-      this.transferError = 'Amount can´t be equal or lower than 0';
-      return;
-    }
-
-    const transferInitEvent: IConsoleEvent = {
-      message: 'Init transfer',
+  public verifyTransaction = async (transactionId: string) => {
+    const transactionVerifyEvent: IConsoleEvent = {
+      message: 'Verifying Transaction',
       type: ConsoleEventTypes.waiting,
       id: uuidv4(),
       data: {
-        amount: this.transferAmount,
+        transactionId,
       },
     };
 
-    this.consoleEvent.emit(transferInitEvent);
+    this.consoleEvent.emit(transactionVerifyEvent);
 
-    this.showTransfer = false;
+    return Promise.resolve(setTimeout(() => {}, 2000));
+  };
+
+  public verifyBalance = async (transactionId: string) => {
+    const transactionVerifyEvent: IConsoleEvent = {
+      message: 'Verifying Balance',
+      type: ConsoleEventTypes.waiting,
+      id: uuidv4(),
+      data: {
+        transactionId,
+      },
+    };
+
+    this.consoleEvent.emit(transactionVerifyEvent);
+
+    return Promise.resolve(setTimeout(() => {}, 2000));
+  };
+
+  public transaction = async ($event: Event) => {
+    $event.preventDefault();
+    const transactionId = uuidv4();
+    const allowSeamless = this.demo.getStateProp('allowSeamless');
+    this.transactionError = null;
+
+    if (this.transactionAmount <= 0) {
+      this.transactionError = 'Amount can´t be equal or lower than 0';
+      setTimeout(() => {
+        this.transactionError = null;
+      }, 5000);
+      return;
+    }
+    if (this.transactionAmount > this.demo.balance) {
+      if (!allowSeamless) {
+        this.transactionError =
+          'Not enough in balance. Make sure it´s toped up or allow seamless transfers';
+        setTimeout(() => {
+          this.transactionError = null;
+        }, 5000);
+        return;
+      }
+      await this.verifyBalance(transactionId);
+    }
+
+    const transactionInitEvent: IConsoleEvent = {
+      message: 'Init Transaction',
+      type: ConsoleEventTypes.waiting,
+      id: uuidv4(),
+      data: {
+        amount: this.transactionAmount,
+        type: this.demo.getStateProp('transactionType'),
+        target:
+          this.demo.getStateProp('transactionType') === 'peyya'
+            ? this.walletOrPeyyaId
+            : this.iban,
+      },
+    };
+
+    this.consoleEvent.emit(transactionInitEvent);
+
+    this.showTransaction = false;
     this.waiting = true;
+
+    await this.verifyTransaction(transactionId);
+
     setTimeout(() => {
       this.waiting = false;
-      this.demo.setBalance(this.demo.balance + this.transferAmount);
+      this.demo.setBalance(this.demo.balance - this.transactionAmount);
 
-      const transferCompleteEvent: IConsoleEvent = {
-        message: 'Transfer completed',
+      const transactionCompleteEvent: IConsoleEvent = {
+        message: 'Transaction completed',
         type: ConsoleEventTypes.success,
         id: uuidv4(),
         data: {
-          transfered: this.transferAmount,
+          transactionId,
+          amount: this.transactionAmount,
           balance: this.demo.balance,
+          type: this.demo.getStateProp('transactionType'),
+          target:
+            this.demo.getStateProp('transactionType') === 'peyya'
+              ? this.walletOrPeyyaId
+              : this.iban,
         },
       };
 
-      this.consoleEvent.emit(transferCompleteEvent);
+      this.consoleEvent.emit(transactionCompleteEvent);
 
-      this.transferAmount = 0;
+      this.transactionAmount = 0;
     }, 1000);
   };
 

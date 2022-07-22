@@ -56,7 +56,8 @@
       id="allow-auto"
       type="checkbox"
       class="w-6 h-6 rounded-sm"
-      [(ngModel)]="allowSeamless"
+      [checked]="allowSeamless"
+      (change)="toggleSeamlessTransfer()"
     />
   </label>
 

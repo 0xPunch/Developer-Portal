@@ -21,7 +21,7 @@ export class WalletComponent implements OnInit {
   public waiting = false;
   public authorized = false;
   public showRestart = false;
-  public allowSeamless = true;
+  public allowSeamless = this.demoService.getStateProp('allowSeamless');
   public showTransfer = false;
   public transferAmount = 0;
   public showCurrencyPicker = false;
@@ -40,6 +40,12 @@ export class WalletComponent implements OnInit {
   public openTransferModal = ($event: Event) => {
     $event.preventDefault();
     this.showTransfer = true;
+  };
+
+  public toggleSeamlessTransfer = () => {
+    const allowSeamless = this.demoService.getStateProp('allowSeamless');
+    this.demoService.updateState({ allowSeamless: !allowSeamless });
+    this.allowSeamless = !allowSeamless;
   };
 
   public transfer = ($event: Event) => {

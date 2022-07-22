@@ -32,7 +32,8 @@ export class DemoService implements OnDestroy {
    */
   private _state$: BehaviorSubject<{ [key: string]: any }> =
     new BehaviorSubject<{ [key: string]: any }>({
-      transferType: 'iban',
+      transactionType: 'peyya',
+      allowSeamless: true,
     });
 
   public getState = () => this._state$.asObservable();
