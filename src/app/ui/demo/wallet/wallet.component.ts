@@ -6,6 +6,7 @@ import { catchError, throwError, Subscription, BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { DemoRequestMethods, DemoService } from 'src/app/services/demo.service';
 import { ApiEndpoints, ApiHost } from 'src/app/constants/api';
+import { WalletService } from 'src/app/services/wallet.service';
 
 interface BanksResult {
   status: string;
@@ -31,7 +32,9 @@ export class WalletComponent implements OnInit {
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
 
-  constructor(public http: HttpClient, public demoService: DemoService) {}
+  constructor(public demoService: DemoService, public wallet: WalletService) {
+    this.wallet.getWallet();
+  }
 
   public cancelTransfer = () => {
     this.showTransfer = false;

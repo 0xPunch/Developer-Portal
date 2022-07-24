@@ -1,11 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IEmulator } from 'src/app/models/emulator';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ConsoleEventTypes, IConsoleEvent } from 'src/app/models/console';
-import { catchError, throwError, Subscription, BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-import { DemoRequestMethods, DemoService } from 'src/app/services/demo.service';
-import { ApiEndpoints, ApiHost } from 'src/app/constants/api';
+import { DemoService } from 'src/app/services/demo.service';
 import { countries } from 'countries-list';
 
 interface BanksResult {
