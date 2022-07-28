@@ -1,6 +1,6 @@
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { DocsModule } from './routes/docs/docs.module';
-import { SettingsModule } from './routes/settings/settings.module';
+import { PreferencesModule } from './routes/preferences/preferences.module';
 import { ApplicationsModule } from './routes/applications/applications.module';
 import { UsersModule } from './routes/users/users.module';
 import { HeaderModule } from './ui/header/header.module';
@@ -23,7 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     AppRoutingModule,
     UsersModule,
     ApplicationsModule,
-    SettingsModule,
+    PreferencesModule,
     DocsModule,
     HttpClientModule,
 

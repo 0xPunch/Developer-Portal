@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { asideRoutes } from 'src/app/constants/routes';
 import { IRoute } from 'src/app/models/route';
@@ -10,7 +11,11 @@ import { IRoute } from 'src/app/models/route';
 export class AsideComponent implements OnInit {
   public routes: IRoute[] = asideRoutes;
 
-  constructor() {}
+  public goHome = () => {
+    this.router.navigate(['/']);
+  };
+
+  constructor(public router: Router) {}
 
   ngOnInit() {}
 }

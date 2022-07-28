@@ -48,7 +48,7 @@ export class DeveloperService implements OnDestroy {
     });
   };
 
-  public getDeveloper = () => {
+  public getDeveloper = async () => {
     if (!this.developerSub$) {
       this.developerSub$ = this.http
         .get(`${ApiHost}${ApiEndpoints.developer}`)

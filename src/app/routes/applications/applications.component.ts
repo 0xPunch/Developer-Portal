@@ -5,7 +5,7 @@ import { ApplicationService } from 'src/app/services/applications.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-applications',
+  selector: 'route-applications',
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.scss'],
 })

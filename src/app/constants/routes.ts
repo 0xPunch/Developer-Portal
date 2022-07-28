@@ -26,11 +26,11 @@ export const asideRoutes: IRoute[] = [
     module: 'users',
   },
   {
-    name: 'settings',
-    label: 'Settings',
-    path: 'settings',
-    show: false,
+    name: 'preferences',
+    label: 'Preferences',
+    path: 'preferences',
+    show: true,
     external: false,
-    module: 'settings',
+    module: 'preferences',
   },
 ];

@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit {
     this.angularAuth.logout();
   };
 
-  public goToSettings = () => {
-    this.router.navigate(['settings']);
+  public goToPreferences = () => {
+    this.router.navigate(['preferences']);
     this.toggleUserNav();
   };
 

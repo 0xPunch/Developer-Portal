@@ -12,7 +12,7 @@ import { ApiEndpoints, ApiHost } from 'src/app/constants/api';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-application',
+  selector: 'route-application',
   templateUrl: './application.component.html',
   styleUrls: ['./application.component.scss'],
 })
