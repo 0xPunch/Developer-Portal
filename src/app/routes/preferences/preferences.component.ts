@@ -3,7 +3,7 @@ import { AuthService as AngularAuthService } from '@auth0/auth0-angular';
 import { GetProvider } from 'src/app/constants/auth';
 
 @Component({
-  selector: 'route-settings',
+  selector: 'route-preferences',
   templateUrl: './preferences.component.html',
   styleUrls: ['./preferences.component.scss'],
 })
