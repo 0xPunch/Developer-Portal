@@ -1,3 +1,4 @@
+import { ButtonTheme } from 'src/app/models/ui.button';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService as AngularAuthService } from '@auth0/auth0-angular';
@@ -9,6 +10,7 @@ import { UiService, Theme } from 'src/app/services/ui.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  public buttonTheme = ButtonTheme;
   public showUserNav = false;
   public theme = Theme;
   public canGoBack = () => {
@@ -33,6 +35,11 @@ export class HeaderComponent implements OnInit {
 
   public logOut = () => {
     this.angularAuth.logout();
+  };
+
+  public goToSettings = () => {
+    this.router.navigate(['settings']);
+    this.toggleUserNav();
   };
 
   public toggleTheme = () => {

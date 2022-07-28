@@ -1,4 +1,5 @@
 <ng-container *ngIf="getUser$() | async as user">
+  <!-- Main header-->
   <div class="pt-5 px-10 flex flex-row-reverse justify-between bg-w">
     <div
       id="user"
@@ -32,16 +33,23 @@
       </button>
     </div>
   </div>
+  <!-- Close aside area-->
   <div
     class="fixed h-screen w-screen z-30 right-0 top-0"
     (click)="toggleUserNav()"
     *ngIf="showUserNav"
   ></div>
+  <!-- aside -->
   <div
     class="fixed h-screen w-1/4 flex flex-col justify-between right-0 top-0 z-40 p-20 bg-white shadow-2xl transition-transform dark:bg-slate-700"
     [ngClass]="{ 'translate-x-full': !showUserNav }"
   >
-    <h3 class="py-8 text-xl text-slate-400">Hello!</h3>
+    <div>
+      <h3 class="py-8 text-xl text-slate-400">Hello!</h3>
+      <ui-button [theme]="buttonTheme.light" (action)="goToSettings()">
+        Settings
+      </ui-button>
+    </div>
     <div>
       <p class="py-8 pb-4 text-lg text-slate-400">Theme</p>
 

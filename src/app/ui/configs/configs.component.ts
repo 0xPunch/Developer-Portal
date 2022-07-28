@@ -1,3 +1,5 @@
+import { ButtonTheme } from './../../models/ui.button';
+import { InputType } from 'src/app/models/ui.input';
 import { Router } from '@angular/router';
 import { ApplicationService } from 'src/app/services/applications.service';
 import { Component, Input } from '@angular/core';
@@ -9,6 +11,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './configs.component.html',
 })
 export class ConfigsComponent {
+  public inputType = InputType;
+  public buttonTheme = ButtonTheme;
   public showConfirmRemoval = false;
   public showSecret = false;
   public applicationSub$: Subscription | undefined;
@@ -19,8 +23,7 @@ export class ConfigsComponent {
     this.showSecret = !this.showSecret;
   };
 
-  public confirmRemoval = (e: Event) => {
-    e.preventDefault();
+  public confirmRemoval = () => {
     const application = this.applicationService.applicationBehavior$.value;
     if (application) {
       this.applicationSub$ = this.applicationService

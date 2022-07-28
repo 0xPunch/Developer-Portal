@@ -29,7 +29,7 @@ export const asideRoutes: IRoute[] = [
     name: 'settings',
     label: 'Settings',
     path: 'settings',
-    show: true,
+    show: false,
     external: false,
     module: 'settings',
   },

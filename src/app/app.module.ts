@@ -5,6 +5,7 @@ import { ApplicationsModule } from './routes/applications/applications.module';
 import { UsersModule } from './routes/users/users.module';
 import { HeaderModule } from './ui/header/header.module';
 import { AsideModule } from './ui/aside/aside.module';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';

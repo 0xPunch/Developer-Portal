@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError, Subscription, BehaviorSubject } from 'rxjs';
 import { ApiEndpoints, ApiHost } from '../constants/api';
 import { currencies, walletBalance } from '../constants/demo';
+import { countries } from 'countries-list';
 
 export enum DemoRequestMethods {
   POST = 'post',
@@ -25,6 +26,7 @@ export class DemoService implements OnDestroy {
   public currency = currencies[0];
   public currencies = currencies;
   public balance = walletBalance;
+  public countries = countries;
 
   /**
    * Demo state.

@@ -1,26 +1,26 @@
 <form class="block" *ngIf="application">
   <div class="py-4">
-    <label class="mb-4 block font-medium dark:text-slate-300">Client id</label>
-    <input
-      type="text"
-      disabled
-      class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800 dark:text-slate-300"
-      [value]="application.client_id"
-    />
+    <ui-input
+      [config]="{
+        type: inputType.text,
+        disabled: true,
+        initValue: application.client_id,
+        label: 'Client id'
+      }"
+    ></ui-input>
   </div>
 
   <div class="py-4 pr-20 relative">
-    <label class="mb-4 block font-medium dark:text-slate-300"
-      >Client secret</label
-    >
-    <input
-      [type]="showSecret ? 'text' : 'password'"
-      disabled
-      class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800 dark:text-slate-300"
-      [value]="application.client_secret"
-    />
+    <ui-input
+      [config]="{
+        type: showSecret ? inputType.text : inputType.password,
+        disabled: true,
+        initValue: application.client_secret,
+        label: 'Client secret'
+      }"
+    ></ui-input>
     <button
-      class="absolute right-0 bottom-4 px-4 py-3 border-2 border-slate-300 outline-none rounded-xl bg-white"
+      class="absolute right-0 bottom-6 px-4 py-3 border-2 border-slate-300 outline-none rounded-xl bg-white"
       (click)="toggleSecret($event)"
     >
       <svg
@@ -42,12 +42,9 @@
 </form>
 
 <footer class="flex flex-row-reverse mt-20">
-  <button
-    class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl"
-    (click)="deleteApplication()"
-  >
+  <ui-button [theme]="buttonTheme.error" (action)="deleteApplication()">
     Delete application
-  </button>
+  </ui-button>
 </footer>
 
 <ng-container *ngIf="showConfirmRemoval">
@@ -68,13 +65,9 @@
 
     <form>
       <footer class="flex flex-row-reverse mt-8">
-        <button
-          (click)="confirmRemoval($event)"
-          type="button"
-          class="px-8 py-4 rounded-xl bg-green-500 text-white uppercase font-bold hover:shadow-xl"
-        >
+        <ui-button [theme]="buttonTheme.secondary" (action)="confirmRemoval()">
           Confirm
-        </button>
+        </ui-button>
       </footer>
     </form>
   </div>
