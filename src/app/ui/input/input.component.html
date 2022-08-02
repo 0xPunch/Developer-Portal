@@ -1,4 +1,8 @@
-<div *ngIf="config && !config.hidden" class="dark:text-slate-300">
+<div
+  *ngIf="config && !config.hidden"
+  class="dark:text-slate-300"
+  [ngClass]="{ 'mb-4': !config.isLast }"
+>
   <label class="mb-2 block font-medium" *ngIf="config.label">{{
     config.label
   }}</label>
@@ -13,7 +17,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
       />
     </ng-container>
 
@@ -26,7 +30,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
       />
     </ng-container>
 
@@ -39,13 +43,13 @@
         [name]="config.name"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
       />
     </ng-container>
 
     <ng-container *ngSwitchCase="inputType.select">
       <select
-        class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
         (input)="handleChange($event)"
         [value]="value"
         [disabled]="config.disabled"
@@ -58,7 +62,7 @@
 
     <ng-container *ngSwitchCase="inputType.country">
       <select
-        class="block w-full px-4 py-3 border-b-2 mb-4 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
         (input)="handleChange($event)"
         [value]="value"
         [disabled]="config.disabled"
