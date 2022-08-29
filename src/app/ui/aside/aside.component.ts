@@ -4,7 +4,7 @@ import { asideRoutes } from 'src/app/constants/routes';
 import { IRoute } from 'src/app/models/route';
 
 @Component({
-  selector: 'app-aside',
+  selector: 'ui-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
 })

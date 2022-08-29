@@ -4,11 +4,6 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { IInput, InputType } from 'src/app/models/ui.input';
 import { ValidatorsService } from 'src/app/services/validators.service';
-// import {
-//   emailFormatError,
-//   phoneFormatError,
-//   requiredFieldError,
-// } from 'src/app/constants/errors';
 
 @Component({
   selector: 'ui-input',

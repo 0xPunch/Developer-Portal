@@ -1,3 +1,4 @@
+import { InputType } from 'src/app/models/ui.input';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IEmulator } from 'src/app/models/emulator';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -24,6 +25,8 @@ export class BanksComponent implements OnInit {
   public authOptions$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public showRestart = false;
+  public inputType = InputType;
+  public currentCountry = 'SE';
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -45,6 +48,11 @@ export class BanksComponent implements OnInit {
     });
   };
 
+  public updateCountry = (value: any) => {
+    this.currentCountry = value.key;
+    this.getBanks();
+  };
+
   public getBanks = () => {
     this.waiting = true;
     const gettingBanksEvent: IConsoleEvent = {
@@ -58,7 +66,7 @@ export class BanksComponent implements OnInit {
     this.demoService
       .request({
         method: DemoRequestMethods.GET,
-        endpoint: `${ApiHost}${ApiEndpoints.banks}?isoCountry=SE`,
+        endpoint: `${ApiHost}${ApiEndpoints.banks}?isoCountry=${this.currentCountry}`,
         headers: {
           Authorization: this.demoService.getStateProp('authToken') || '',
         },

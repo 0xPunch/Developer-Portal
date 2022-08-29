@@ -197,7 +197,7 @@ export const GuideSendMoneySegmentMock = (
 ): IGuideSegment => {
   return {
     headline: 'Send money',
-    text: 'Send money to a wallet or iban',
+    text: 'Send money to a wallet or iban. First of all, pick your reciever. Is it a bank or another peyya user? Enter amount and wallet/iban number. Then send. It´s that simple',
     hideInNav: false,
     components: [GuideSendMoneyEmulatorComponent(config)],
   };

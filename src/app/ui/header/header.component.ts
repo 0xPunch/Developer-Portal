@@ -5,7 +5,7 @@ import { AuthService as AngularAuthService } from '@auth0/auth0-angular';
 import { UiService, Theme } from 'src/app/services/ui.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'ui-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

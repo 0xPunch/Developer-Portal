@@ -1,13 +1,1 @@
-<div class="px-6 py-4 bg-red-300 text-red-600 text-center" *ngIf="!apiOk">
-  The API is currenly unavailable. Please be patient. We're working on it.
-</div>
-
-<section class="grid grid-cols-12 h-full dark:bg-slate-800">
-  <app-aside
-    class="md:col-span-3 xl:col-span-2 border-r h-full dark:border-slate-700"
-  ></app-aside>
-  <main class="md:col-span-9 xl:col-span-10 h-full overflow-y-scroll" #main>
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-  </main>
-</section>
+<router-outlet></router-outlet>

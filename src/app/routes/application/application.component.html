@@ -76,10 +76,10 @@
     <div class="p-10" *ngIf="activeSection == i">
       <ng-container [ngSwitch]="section.name">
         <ng-container *ngSwitchCase="'general'">
-          <app-configs
+          <ui-configs
             *ngIf="application"
             [application]="application"
-          ></app-configs>
+          ></ui-configs>
         </ng-container>
         <ng-container *ngSwitchCase="'api'">
           <app-api-guide [guide]="guide" *ngIf="guide"></app-api-guide>

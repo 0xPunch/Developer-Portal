@@ -123,7 +123,7 @@
           *ngFor="let stateProp of state | keyvalue"
           (click)="togglee[stateProp.key] = !togglee[stateProp.key]"
         >
-          <label class="dark:text-slate-400 w-20">{{ stateProp.key }}</label>
+          <label class="text-slate-400 w-20">{{ stateProp.key }}</label>
           <p
             class="text-cyan-500 overflow-hidden text-ellipsis"
             *ngIf="!togglee[stateProp.key]"

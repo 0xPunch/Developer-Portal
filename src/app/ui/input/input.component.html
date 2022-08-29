@@ -50,7 +50,7 @@
     <ng-container *ngSwitchCase="inputType.select">
       <select
         class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
-        (input)="handleChange($event)"
+        (select)="handleChange($event)"
         [value]="value"
         [disabled]="config.disabled"
       >
@@ -63,14 +63,15 @@
     <ng-container *ngSwitchCase="inputType.country">
       <select
         class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
-        (input)="handleChange($event)"
-        [value]="value"
-        [disabled]="config.disabled"
+        (change)="handleChange($event)"
+        [(ngModel)]="value"
+        [disabled]="config.disabled || false"
       >
-        <option [value]="'Select recipient country'" selected disabled>
-          Select recipient country
-        </option>
-        <option *ngFor="let country of countries | keyvalue" [value]="country">
+        <option selected disabled [ngValue]="">Select recipient country</option>
+        <option
+          *ngFor="let country of countries | keyvalue"
+          [ngValue]="country"
+        >
           {{ country.value.name }}
         </option>
       </select>

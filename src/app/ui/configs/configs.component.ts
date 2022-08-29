@@ -7,7 +7,7 @@ import { IApplication } from 'src/app/models/application';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-configs',
+  selector: 'ui-configs',
   templateUrl: './configs.component.html',
 })
 export class ConfigsComponent {

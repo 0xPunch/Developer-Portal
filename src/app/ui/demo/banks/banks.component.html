@@ -9,6 +9,12 @@
     </div>
   </div>
 
+  <h3 class="text-lg font-bold mb-8 text-slate-500">Pick your country</h3>
+  <ui-input
+    [config]="{ type: inputType.country, initValue: 'Sweden' }"
+    (valueChange)="updateCountry($event)"
+  ></ui-input>
+
   <div *ngIf="banks$ | async as banks">
     <h3 class="text-lg font-bold mb-8 text-slate-500">Pick your bank</h3>
     <div

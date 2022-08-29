@@ -1,11 +1,4 @@
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { DocsModule } from './routes/docs/docs.module';
-import { PreferencesModule } from './routes/preferences/preferences.module';
-import { ApplicationsModule } from './routes/applications/applications.module';
-import { UsersModule } from './routes/users/users.module';
-import { HeaderModule } from './ui/header/header.module';
-import { AsideModule } from './ui/aside/aside.module';
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
@@ -17,14 +10,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    AsideModule,
-    HeaderModule,
     BrowserModule,
     AppRoutingModule,
-    UsersModule,
-    ApplicationsModule,
-    PreferencesModule,
-    DocsModule,
+
     HttpClientModule,
 
     AuthModule.forRoot({
