@@ -7,5 +7,6 @@ export const ApiEndpoints = {
   banks: '/banks',
   application: '/developer/application',
   auth: '/authorize/phone',
+  authValidate: '/authorize/phone/validate',
   user: '/users',
 };

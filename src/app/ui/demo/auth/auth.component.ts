@@ -14,9 +14,12 @@ import { BehaviorSubject, catchError, throwError } from 'rxjs';
 })
 export class AuthComponent implements OnInit {
   public authPhone = null;
+  public authCode = null;
   public phoneError = '';
+  public codeError = '';
   public waiting = false;
   public showRestart = false;
+  public authorizeStarted = false;
   public authorized = false;
   public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   @Input() config: IEmulator | undefined;
@@ -49,6 +52,7 @@ export class AuthComponent implements OnInit {
     const host = this.config?.config?.ApiHost;
     const full = `${host}${endpoint}`;
     this.waiting = true;
+    this.error$.next(null);
     const authorizingEvent: IConsoleEvent = {
       message: 'Authorizing ...',
       type: ConsoleEventTypes.apiCall,
@@ -77,10 +81,60 @@ export class AuthComponent implements OnInit {
       )
       .pipe(catchError(this.handleAuthError))
       .subscribe((data: any) => {
+        this.authorizeStarted = true;
+        this.waiting = false;
+        const authorizingDone: IConsoleEvent = {
+          message: 'Authorizing started. Waiting for code',
+          type: ConsoleEventTypes.success,
+          id: uuidv4(),
+          data,
+        };
+        this.consoleEvent.emit(authorizingDone);
+        this.demo.updateState({ authToken: data?.token });
+      });
+  };
+
+  public validateAuthorizing = () => {
+    const endpoint = this.config?.config?.ApiEndpoints?.['authValidate'];
+    const host = this.config?.config?.ApiHost;
+    const full = `${host}${endpoint}`;
+    this.waiting = true;
+    this.error$.next(null);
+    const authorizingEvent: IConsoleEvent = {
+      message: 'Validating code ...',
+      type: ConsoleEventTypes.apiCall,
+      id: uuidv4(),
+      data: {
+        url: full,
+        phoneNumber: this.authPhone,
+        otp: this.authCode,
+      },
+    };
+
+    this.consoleEvent.emit(authorizingEvent);
+    const app = this.appService.applicationBehavior$.value;
+    const { client_id, client_secret } = app;
+    this.http
+      .post(
+        full,
+        {
+          phoneNumber: this.authPhone,
+          otp: this.authCode,
+        },
+        {
+          headers: {
+            client_id,
+            client_secret,
+          },
+        }
+      )
+      .pipe(catchError(this.handleAuthError))
+      .subscribe((data: any) => {
+        this.authorizeStarted = false;
         this.authorized = true;
         this.waiting = false;
         const authorizingDone: IConsoleEvent = {
-          message: 'Authorizing complete',
+          message: 'Authorizing completed',
           type: ConsoleEventTypes.success,
           id: uuidv4(),
           data,
@@ -93,6 +147,7 @@ export class AuthComponent implements OnInit {
   public restart = ($event: Event) => {
     $event.preventDefault();
     this.authorized = false;
+    this.authorizeStarted = false;
     this.showRestart = false;
     this.error$.next(null);
     const restart: IConsoleEvent = {
@@ -107,10 +162,16 @@ export class AuthComponent implements OnInit {
   public handleClick = ($event: Event) => {
     $event.preventDefault();
     this.phoneError = '';
-    if (this.authPhone) {
-      this.authorizing();
+    if (this.authorizeStarted) {
+      if (this.authCode) {
+        this.validateAuthorizing();
+      }
     } else {
-      this.phoneError = 'Missing phone number';
+      if (this.authPhone) {
+        this.authorizing();
+      } else {
+        this.phoneError = 'Missing phone number';
+      }
     }
   };
 

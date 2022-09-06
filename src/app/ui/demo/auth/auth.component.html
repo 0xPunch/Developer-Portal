@@ -4,7 +4,7 @@
   <form *ngIf="!authorized">
     <p class="text-lg">Authenticate to use Peyya</p>
 
-    <div class="py-4">
+    <div class="py-4" *ngIf="!authorizeStarted">
       <label class="mb-4 block font-medium">Phone number</label>
       <p *ngIf="phoneError" class="text-rose-500 my-2">{{ phoneError }}</p>
       <input
@@ -13,6 +13,19 @@
         placeholder="Phone number"
         class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none"
         [(ngModel)]="authPhone"
+      />
+    </div>
+
+    <div class="py-4" *ngIf="authorizeStarted">
+      <label class="mb-4 block font-medium">Code</label>
+      <p *ngIf="codeError" class="text-rose-500 my-2">{{ codeError }}</p>
+      <input
+        type="number"
+        name="application-name"
+        placeholder="Phone number"
+        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none"
+        [(ngModel)]="authCode"
+        max="6"
       />
     </div>
 
@@ -25,11 +38,18 @@
 
     <div class="flex flex-row-reverse mt-10">
       <button
-        *ngIf="!waiting"
+        *ngIf="!waiting && !authorizeStarted"
         (click)="handleClick($event)"
         class="px-8 py-4 rounded-xl bg-purple-500 text-white uppercase font-bold hover:shadow-xl"
       >
         Sign in
+      </button>
+      <button
+        *ngIf="!waiting && authorizeStarted"
+        (click)="handleClick($event)"
+        class="px-8 py-4 rounded-xl bg-purple-500 text-white uppercase font-bold hover:shadow-xl"
+      >
+        Validate
       </button>
       <button
         disabled

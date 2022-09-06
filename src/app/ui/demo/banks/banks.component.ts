@@ -27,6 +27,7 @@ export class BanksComponent implements OnInit {
   public showRestart = false;
   public inputType = InputType;
   public currentCountry = 'SE';
+  public countries$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -247,7 +248,38 @@ export class BanksComponent implements OnInit {
       });
   };
 
-  public getCountries = () => {};
+  public getCountries = () => {
+    this.waiting = true;
+    const gettingCountriesEvent: IConsoleEvent = {
+      message: 'Getting countries ...',
+      type: ConsoleEventTypes.apiCall,
+      id: uuidv4(),
+    };
+
+    this.consoleEvent.emit(gettingCountriesEvent);
+
+    this.demoService
+      .request({
+        method: DemoRequestMethods.GET,
+        endpoint: `${ApiHost}${ApiEndpoints.banks}/countries`,
+        headers: {
+          Authorization: this.demoService.getStateProp('authToken') || '',
+        },
+      })
+      .pipe(catchError(this.handleGettingBanksError))
+      .subscribe((data) => {
+        this.waiting = false;
+        this.countries$.next(data);
+        this.demoService.updateState({ countries: data });
+        const gettingCountriesDone: IConsoleEvent = {
+          message: 'Countries fetched complete',
+          type: ConsoleEventTypes.success,
+          id: uuidv4(),
+          data,
+        };
+        this.consoleEvent.emit(gettingCountriesDone);
+      });
+  };
 
   public restart = ($event: Event) => {
     $event.preventDefault();
@@ -272,6 +304,7 @@ export class BanksComponent implements OnInit {
     };
 
     this.consoleEvent.emit(initEvent);
+    this.getCountries();
     this.getBanks();
   }
 }

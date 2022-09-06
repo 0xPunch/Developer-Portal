@@ -67,9 +67,11 @@
         [(ngModel)]="value"
         [disabled]="config.disabled || false"
       >
-        <option selected disabled [ngValue]="">Select recipient country</option>
+        <option selected disabled [ngValue]="''">
+          Select recipient country
+        </option>
         <option
-          *ngFor="let country of countries | keyvalue"
+          *ngFor="let country of config.options || countries | keyvalue"
           [ngValue]="country"
         >
           {{ country.value.name }}

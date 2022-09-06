@@ -1,19 +1,25 @@
 <div class="p-4 pt-10 rounded-3xl bg-white z-30 w-full relative h-full">
-  <h2 class="text-3xl font-bold mb-12">Connect bank</h2>
-
-  <div *ngIf="waiting" class="p-10 flex place-content-center">
+  <h2 class="text-3xl font-bold mb-12 flex justify-between">
+    Connect bank
     <div
-      class="w-24 h-24 p-5 bg-indigo-600 rounded-full flex items-center justify-center"
+      *ngIf="waiting"
+      class="w-9 h-9 p-2 bg-indigo-600 rounded-full flex items-center justify-center"
     >
-      <div class="w-24 h-2 bg-white animate-spin rounded-lg"></div>
+      <div class="w-9 h-1 bg-white animate-spin rounded-lg"></div>
     </div>
-  </div>
+  </h2>
 
   <h3 class="text-lg font-bold mb-8 text-slate-500">Pick your country</h3>
-  <ui-input
-    [config]="{ type: inputType.country, initValue: 'Sweden' }"
-    (valueChange)="updateCountry($event)"
-  ></ui-input>
+  <ng-container *ngIf="countries$ | async as countriesData">
+    <ui-input
+      [config]="{
+        type: inputType.country,
+        initValue: countriesData.countries[0],
+        options: countriesData.countries
+      }"
+      (valueChange)="updateCountry($event)"
+    ></ui-input>
+  </ng-container>
 
   <div *ngIf="banks$ | async as banks">
     <h3 class="text-lg font-bold mb-8 text-slate-500">Pick your bank</h3>
