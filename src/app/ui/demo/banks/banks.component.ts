@@ -38,6 +38,8 @@ export class BanksComponent implements OnInit {
   public handleGettingBanksError = (error: HttpErrorResponse) => {
     return throwError(() => {
       this.showRestart = true;
+      this.waiting = false;
+      this.banks$.next(null);
       const gettingBanksDone: IConsoleEvent = {
         message: 'Banks fetched failed',
         type: ConsoleEventTypes.error,
@@ -50,12 +52,13 @@ export class BanksComponent implements OnInit {
   };
 
   public updateCountry = (value: any) => {
-    this.currentCountry = value.key;
+    this.currentCountry = value.key || value;
     this.getBanks();
   };
 
   public getBanks = () => {
     this.waiting = true;
+    this.error$.next(null);
     const gettingBanksEvent: IConsoleEvent = {
       message: 'Getting banks ...',
       type: ConsoleEventTypes.apiCall,
@@ -267,10 +270,20 @@ export class BanksComponent implements OnInit {
         },
       })
       .pipe(catchError(this.handleGettingBanksError))
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.waiting = false;
-        this.countries$.next(data);
-        this.demoService.updateState({ countries: data });
+        this.demoService.updateState({ countries: data.countries });
+
+        const countriesKeyValue = data.countries.map(
+          (country: { name: string; isoCountryCode: string }) => {
+            return {
+              key: country.name,
+              value: country.isoCountryCode,
+            };
+          }
+        );
+        this.countries$.next(countriesKeyValue);
+
         const gettingCountriesDone: IConsoleEvent = {
           message: 'Countries fetched complete',
           type: ConsoleEventTypes.success,

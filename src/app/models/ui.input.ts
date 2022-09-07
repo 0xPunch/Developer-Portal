@@ -7,6 +7,7 @@ export enum InputType {
   phone = 'phone',
   email = 'email',
   password = 'password',
+  numberValidation = 'numberValidation',
 }
 export enum InputTheme {
   dark = 'dark',

@@ -71,10 +71,10 @@
           Select recipient country
         </option>
         <option
-          *ngFor="let country of config.options || countries | keyvalue"
-          [ngValue]="country"
+          *ngFor="let country of config.options || (countries | keyvalue)"
+          [ngValue]="country.value || country"
         >
-          {{ country.value.name }}
+          {{ country.key || country }}
         </option>
       </select>
     </ng-container>
