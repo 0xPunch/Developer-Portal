@@ -72,7 +72,8 @@ export class BanksComponent implements OnInit {
         method: DemoRequestMethods.GET,
         endpoint: `${ApiHost}${ApiEndpoints.banks}?isoCountry=${this.currentCountry}`,
         headers: {
-          Authorization: this.demoService.getStateProp('authToken') || '',
+          Authorization:
+            `Bearer ${this.demoService.getStateProp('token')}` || '',
         },
       })
       .pipe(catchError(this.handleGettingBanksError))
@@ -266,7 +267,8 @@ export class BanksComponent implements OnInit {
         method: DemoRequestMethods.GET,
         endpoint: `${ApiHost}${ApiEndpoints.banks}/countries`,
         headers: {
-          Authorization: this.demoService.getStateProp('authToken') || '',
+          Authorization:
+            `Bearer ${this.demoService.getStateProp('token')}` || '',
         },
       })
       .pipe(catchError(this.handleGettingBanksError))
@@ -306,6 +308,13 @@ export class BanksComponent implements OnInit {
     this.error$.next(null);
     this.consoleEvent.emit(restart);
 
+    if (!this.demoService.getStateProp('token')) {
+      this.error$.next('You need to be authenticated first. Then try again.');
+      this.showRestart = true;
+      return;
+    }
+
+    this.getCountries();
     this.getBanks();
   };
 
@@ -317,6 +326,13 @@ export class BanksComponent implements OnInit {
     };
 
     this.consoleEvent.emit(initEvent);
+
+    if (!this.demoService.getStateProp('token')) {
+      this.error$.next('You need to be authenticated first. Then try again.');
+      this.showRestart = true;
+      return;
+    }
+
     this.getCountries();
     this.getBanks();
   }

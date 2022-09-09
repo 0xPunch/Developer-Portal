@@ -61,6 +61,13 @@
     />
   </label>
 
+  <div
+    *ngIf="error$ | async as error"
+    class="p-3 bg-red-500 text-white rounded-xl"
+  >
+    {{ error }}
+  </div>
+
   <button
     *ngIf="!allowSeamless"
     (click)="openTransferModal($event)"

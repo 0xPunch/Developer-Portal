@@ -90,7 +90,6 @@ export class AuthComponent implements OnInit {
           data,
         };
         this.consoleEvent.emit(authorizingDone);
-        this.demo.updateState({ authToken: data?.token });
       });
   };
 
@@ -132,6 +131,7 @@ export class AuthComponent implements OnInit {
       .subscribe((data: any) => {
         this.authorizeStarted = false;
         this.authorized = true;
+        this.showRestart = true;
         this.waiting = false;
         const authorizingDone: IConsoleEvent = {
           message: 'Authorizing completed',
@@ -140,7 +140,11 @@ export class AuthComponent implements OnInit {
           data,
         };
         this.consoleEvent.emit(authorizingDone);
-        this.demo.updateState({ authToken: data?.token });
+        this.demo.updateState({
+          token: data?.access_token,
+          token_type: data?.token_type,
+          token_expires: data?.expires_in,
+        });
       });
   };
 

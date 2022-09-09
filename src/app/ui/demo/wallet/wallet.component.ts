@@ -27,14 +27,13 @@ export class WalletComponent implements OnInit {
   public transferAmount = 0;
   public showCurrencyPicker = false;
   public transferError: string | null = null;
+  public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
 
-  constructor(public demoService: DemoService, public wallet: WalletService) {
-    this.wallet.getWallet();
-  }
+  constructor(public demoService: DemoService, public wallet: WalletService) {}
 
   public cancelTransfer = () => {
     this.showTransfer = false;
@@ -116,5 +115,12 @@ export class WalletComponent implements OnInit {
     };
 
     this.consoleEvent.emit(initEvent);
+
+    if (!this.demoService.getStateProp('token')) {
+      this.error$.next('You need to be authenticated first. Then try again.');
+      this.showRestart = true;
+      return;
+    }
+    this.wallet.getWallet();
   }
 }

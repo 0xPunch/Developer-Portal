@@ -19,8 +19,18 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
+          uri: 'http://localhost:5000/v1/developer',
+          tokenOptions: {
+            // The attached token should target this audience
+            audience: 'https://dev-ibqj5g5m.us.auth0.com/api/v2/',
+
+            // The attached token should have these scopes
+            scope: 'read:current_user read:email',
+          },
+        },
+        {
           // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-          uri: 'http://localhost:5000/v1/*',
+          uri: 'http://localhost:5000/v1/developer/*',
           tokenOptions: {
             // The attached token should target this audience
             audience: 'https://dev-ibqj5g5m.us.auth0.com/api/v2/',
