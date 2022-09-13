@@ -17,7 +17,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
       />
     </ng-container>
 
@@ -30,7 +30,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
       />
     </ng-container>
 
@@ -43,8 +43,85 @@
         [name]="config.name"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-800"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
       />
+    </ng-container>
+
+    <ng-container *ngSwitchCase="inputType.numberValidation">
+      <div class="flex gap-1">
+        <input
+          type="tel"
+          #code1
+          pattern="\d*"
+          (input)="handleCode($event, 1)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+        <input
+          type="tel"
+          #code2
+          pattern="\d*"
+          (input)="handleCode($event, 2)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+        <input
+          type="tel"
+          #code3
+          pattern="\d*"
+          (input)="handleCode($event, 3)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+        <input
+          type="tel"
+          #code4
+          pattern="\d*"
+          (input)="handleCode($event, 4)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+        <input
+          type="tel"
+          #code5
+          pattern="\d*"
+          (input)="handleCode($event, 5)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+        <input
+          type="tel"
+          #code6
+          pattern="\d*"
+          (input)="handleCode($event, 6)"
+          [name]="config.name"
+          [disabled]="config.disabled"
+          [placeholder]="config.placeholder"
+          autocomplete="off"
+          maxlength="1"
+          class="block w-full px-0 text-center py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        />
+      </div>
     </ng-container>
 
     <ng-container *ngSwitchCase="inputType.select">

@@ -67,10 +67,23 @@ export const GuideCreateAccountEmulatorComponent = (
   };
 };
 
+export const GuideWelcomeSegmentMock = (
+  config: IGuideConfig
+): IGuideSegment => {
+  return {
+    hideInNav: true,
+    image: 'undraw_astronaut_re_8c33.svg',
+  };
+};
+
 export const GuideStartSegmentMock = (config: IGuideConfig): IGuideSegment => {
   return {
     headline: 'Getting started',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde eos vel eligendi facilis aspernatur, nihil assumenda quisquam dolor? Nihil commodi facilis, totam eveniet aut ea modi necessitatibus rerum reprehenderit sit?',
+    text: `
+      Hi and welcome to the API section of the portal. Here you will find demo's and code examples for all segments.
+      If you have any trouble or want provide with some improvements or new cool ideas. Please feel free to share them with us.
+      We always strive to be better.
+    `,
     hideInNav: false,
     components: [],
   };
@@ -81,7 +94,13 @@ export const GuideGoodToKnowSegmentMock = (
 ): IGuideSegment => {
   return {
     headline: 'Good to know',
-    text: 'Before you start. This some of the most essentials we think you should know. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde eos vel eligendi facilis aspernatur, nihil assumenda quisquam dolor? Nihil commodi facilis, totam eveniet aut ea modi necessitatibus rerum reprehenderit sit?',
+    text: `Before you start. This some of the most essentials we think you should know.
+    In order to test, you should start by authenticate in the first step. Then you can try any example as you wish.
+    Please keep in mind that the authorization is "live" and will acctually send you a code. So please type your phone correctly.
+    \n
+    Below you can see a word-list with common used words. These words have a type and a format.
+    Some of them are required in all requests.
+    `,
     hideInNav: false,
     components: [GuideGoodToKnowCodeComponent(config)],
   };
@@ -90,7 +109,11 @@ export const GuideGoodToKnowSegmentMock = (
 export const GuideAuthSegmentMock = (config: IGuideConfig): IGuideSegment => {
   return {
     headline: 'Authenticate by mobile',
-    text: 'Authenitcating a user will return a token, this token is needed in every request. The token includes your client id. And will only work for that application. If a user doesn´t exists, a new user will be created. Important to follow the format of "+nn nn nnnnnnn" Next step is to complete user account. See "complete new user"segment',
+    text: `
+      Authenitcating a user will return a token, this token is needed in every request.
+      The token includes your client id. And will only work for that application.
+      If a user doesn´t exists, a new user will be created.
+      Important to follow the format of "+nn nn nnnnnnn" Next step is to complete user account. See "complete new user"segment`,
     hideInNav: false,
     components: [
       GuideAuthCodeComponent(config),
@@ -241,6 +264,7 @@ export const GuideMock = (config: IGuideConfig): IGuide => {
   return {
     segments: [
       GuideStartSegmentMock(config),
+      GuideWelcomeSegmentMock(config),
       GuideGoodToKnowSegmentMock(config),
       GuideAuthSegmentMock(config),
       GuideCompleteAccountSegmentMock(config),

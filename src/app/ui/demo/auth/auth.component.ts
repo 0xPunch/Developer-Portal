@@ -1,3 +1,4 @@
+import { InputType } from 'src/app/models/ui.input';
 import { DemoService } from 'src/app/services/demo.service';
 import { ApplicationService } from 'src/app/services/applications.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -13,14 +14,15 @@ import { BehaviorSubject, catchError, throwError } from 'rxjs';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  public authPhone = null;
-  public authCode = null;
+  public authPhone: string | null = null;
+  public authCode: string | null = null;
   public phoneError = '';
   public codeError = '';
   public waiting = false;
   public showRestart = false;
   public authorizeStarted = false;
   public authorized = false;
+  public inputType = InputType;
   public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -176,6 +178,29 @@ export class AuthComponent implements OnInit {
       } else {
         this.phoneError = 'Missing phone number';
       }
+    }
+  };
+  public handleInputError = (error: string, key: string) => {
+    switch (key) {
+      case 'phone':
+        this.phoneError = error;
+        break;
+      case 'code':
+        this.codeError = error;
+        break;
+    }
+  };
+  public handleInputChange = (value: string, key: string) => {
+    switch (key) {
+      case 'phone':
+        this.authPhone = value;
+        break;
+      case 'code':
+        this.authCode = value;
+        break;
+      case 'numberValidation':
+        this.authCode = value;
+        break;
     }
   };
 

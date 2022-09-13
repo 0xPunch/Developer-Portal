@@ -1,6 +1,14 @@
 import { DemoService } from 'src/app/services/demo.service';
 import { BehaviorSubject } from 'rxjs';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 
 import { IInput, InputType } from 'src/app/models/ui.input';
 import { ValidatorsService } from 'src/app/services/validators.service';
@@ -29,6 +37,14 @@ export class InputComponent implements OnInit {
   public error$: BehaviorSubject<string | null> = new BehaviorSubject<
     string | null
   >(null);
+
+  // Elements
+  @ViewChild('code1') code1: ElementRef;
+  @ViewChild('code2') code2: ElementRef;
+  @ViewChild('code3') code3: ElementRef;
+  @ViewChild('code4') code4: ElementRef;
+  @ViewChild('code5') code5: ElementRef;
+  @ViewChild('code6') code6: ElementRef;
 
   /**
    * Validate input
@@ -76,8 +92,35 @@ export class InputComponent implements OnInit {
       $event.preventDefault();
       $event.stopPropagation();
     }
+    const { value } = $event.target as any;
+
+    this.value = value;
     await this.validateInput();
     this.valueChange.emit(this.value);
+  };
+
+  /**
+   * Handle code method
+   *
+   */
+  public handleCode = ($event: Event, idx: number) => {
+    const { value, nextSibling } = $event.target as any;
+
+    nextSibling?.focus();
+
+    const value1 = this.code1.nativeElement.value;
+    const value2 = this.code2.nativeElement.value;
+    const value3 = this.code3.nativeElement.value;
+    const value4 = this.code4.nativeElement.value;
+    const value5 = this.code5.nativeElement.value;
+    const value6 = this.code6.nativeElement.value;
+
+    const full = [value1, value2, value3, value4, value5, value6]
+      .join('')
+      .trim();
+    if (full.length === 6) {
+      this.valueChange.emit(full);
+    }
   };
 
   /**

@@ -1,3 +1,4 @@
+import { InputType } from 'src/app/models/ui.input';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IEmulator } from 'src/app/models/emulator';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -11,11 +12,12 @@ import { catchError, throwError } from 'rxjs';
   styleUrls: ['./create-account.component.scss'],
 })
 export class CreateAccountComponent implements OnInit {
-  public userFirstName = null;
-  public userLastName = null;
+  public userFirstName: any = null;
+  public userLastName: any = null;
   public accountError = '';
   public waiting = false;
   public complete = false;
+  public inputType = InputType;
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
@@ -96,6 +98,24 @@ export class CreateAccountComponent implements OnInit {
       this.creating();
     } else {
       this.accountError = 'Missing first and/or last name';
+    }
+  };
+
+  public handleInputError = (error: string, key: string) => {
+    switch (key) {
+      case 'userLastName':
+        this.accountError = error;
+        break;
+    }
+  };
+  public handleInputChange = (value: string, key: string) => {
+    switch (key) {
+      case 'userFirstName':
+        this.userFirstName = value;
+        break;
+      case 'userLastName':
+        this.userLastName = value;
+        break;
     }
   };
 

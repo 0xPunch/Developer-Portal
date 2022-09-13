@@ -1,3 +1,4 @@
+import { InputType } from 'src/app/models/ui.input';
 import { IApplication } from 'src/app/models/application';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./applications.component.scss'],
 })
 export class ApplicationsComponent implements OnInit {
+  public inputType = InputType;
   public newApplication: { name: string } = { name: '' };
 
   public goToApplication = (application: IApplication) => {
@@ -31,6 +33,14 @@ export class ApplicationsComponent implements OnInit {
     this.applicationService.createNewApplication(this.newApplication.name);
     // Handle creation here.
     this.cancelNewApplication();
+  };
+
+  public handleInputChange = (value: string, key: string) => {
+    switch (key) {
+      case 'applicationName':
+        this.newApplication.name = value;
+        break;
+    }
   };
 
   constructor(

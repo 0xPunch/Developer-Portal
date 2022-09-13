@@ -1,8 +1,8 @@
-import { Demos } from './../mocks/demo';
+import { IDemo } from './demo';
 export interface IEmulator {
   name: string;
   toggleApi: boolean;
-  segment: Demos | undefined; // Handle this so we can define specific segment in Peyya-application. egs. Create user, send money.
+  segment: IDemo; // Handle this so we can define specific segment in Peyya-application. egs. Create user, send money.
   config?: {
     client_secret: string;
     client_id: string;

@@ -4,28 +4,36 @@
   <h2 class="text-3xl font-bold mb-12">Complete account</h2>
 
   <form *ngIf="!complete">
-    <div class="py-4">
-      <label class="mb-4 block font-medium">First name</label>
+    <div>
       <p *ngIf="accountError" class="text-rose-500 my-2">{{ accountError }}</p>
-      <input
-        type="text"
-        name="application-name"
-        placeholder="First name"
-        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none"
-        [(ngModel)]="userFirstName"
-      />
+      <ui-input
+        [config]="{
+          id: 'userFirstName',
+          type: inputType.text,
+          name: 'userFirstName',
+          placeholder: 'First name',
+          initValue: userFirstName,
+          label: 'First name'
+        }"
+        (valueInvalid)="handleInputError($event, 'userFirstName')"
+        (valueChange)="handleInputChange($event, 'userFirstName')"
+      ></ui-input>
     </div>
 
-    <div class="py-4">
-      <label class="mb-4 block font-medium">Last name</label>
+    <div>
       <p *ngIf="accountError" class="text-rose-500 my-2">{{ accountError }}</p>
-      <input
-        type="text"
-        name="application-name"
-        placeholder="Last name"
-        class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none"
-        [(ngModel)]="userLastName"
-      />
+      <ui-input
+        [config]="{
+          id: 'userLastName',
+          type: inputType.text,
+          name: 'userLastName',
+          placeholder: 'Last name',
+          initValue: userLastName,
+          label: 'Last name'
+        }"
+        (valueInvalid)="handleInputError($event, 'userLastName')"
+        (valueChange)="handleInputChange($event, 'userLastName')"
+      ></ui-input>
     </div>
 
     <div class="flex flex-row-reverse mt-10">

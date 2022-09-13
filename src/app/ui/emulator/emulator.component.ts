@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { IDemo } from 'src/app/models/demo';
+import { Demos } from 'src/app/mocks/demo';
 
 @Component({
   selector: 'app-emulator',
@@ -21,14 +22,17 @@ export class EmulatorComponent implements OnInit {
   @Input() config: IEmulator = {
     name: '',
     toggleApi: true,
-    segment: undefined,
+    segment: {
+      name: Demos.none,
+      authRequired: true,
+    },
   };
 
   @ViewChild('calls') public calls: ElementRef;
 
   public eventsExpanded: { [key: string]: boolean } = {};
   public eventTypes = ConsoleEventTypes;
-  public demo: IDemo = { name: undefined };
+  public demo: IDemo = { name: Demos.none, authRequired: true };
   public consoleEvents: IConsoleEvent[] = [];
   public activeConsoleTab = 'calls';
   public togglee: { [key: string]: boolean } = {};
@@ -63,10 +67,10 @@ export class EmulatorComponent implements OnInit {
 
   public toggleApiCalls = () => {
     if (this.config.segment) {
-      if (localStorage.getItem(this.config.segment)) {
-        localStorage.removeItem(this.config.segment);
+      if (localStorage.getItem(this.config.segment.name)) {
+        localStorage.removeItem(this.config.segment.name);
       } else {
-        localStorage.setItem(this.config.segment, 'true');
+        localStorage.setItem(this.config.segment.name, 'true');
       }
     }
     this.showApiConsole$.next(!this.showApiConsole$.value);
@@ -76,8 +80,11 @@ export class EmulatorComponent implements OnInit {
 
   ngOnInit() {
     if (this.config.segment) {
-      this.demo = { name: this.config.segment };
-      const showApiConsole = localStorage.getItem(this.config.segment);
+      this.demo = {
+        name: this.config.segment.name,
+        authRequired: this.config.segment.authRequired,
+      };
+      const showApiConsole = localStorage.getItem(this.config.segment.name);
       if (showApiConsole) {
         this.showApiConsole$.next(true);
       }

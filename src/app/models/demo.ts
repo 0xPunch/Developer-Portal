@@ -1,7 +1,8 @@
 import { Demos } from '../mocks/demo';
 
 export interface IDemo {
-  name: Demos | undefined;
+  name: Demos;
+  authRequired: boolean;
 }
 
 export interface IDemoCurrency {

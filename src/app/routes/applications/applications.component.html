@@ -92,7 +92,7 @@
 
     <form *ngIf="newApplication">
       <div class="py-4">
-        <label class="mb-4 block font-medium dark:text-slate-300"
+        <!-- <label class="mb-4 block font-medium dark:text-slate-300"
           >Name of the application</label
         >
         <input
@@ -101,7 +101,18 @@
           placeholder="Name"
           class="block w-full px-4 py-3 border-b-2 border-slate-300 outline-none dark:bg-slate-700 dark:text-slate-300"
           [(ngModel)]="newApplication.name"
-        />
+        /> -->
+        <ui-input
+          [config]="{
+            id: 'applicationName',
+            type: inputType.text,
+            name: 'applicationName',
+            placeholder: 'Name of the application',
+            initValue: newApplication.name,
+            label: 'Name'
+          }"
+          (valueChange)="handleInputChange($event, 'applicationName')"
+        ></ui-input>
       </div>
       <footer class="flex flex-row-reverse mt-8">
         <button

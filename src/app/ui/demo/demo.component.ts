@@ -1,3 +1,4 @@
+import { DemoService } from 'src/app/services/demo.service';
 import { IEmulator } from 'src/app/models/emulator';
 import { IConsoleEvent } from 'src/app/models/console';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -9,7 +10,7 @@ import { Demos } from 'src/app/mocks/demo';
   templateUrl: 'demo.component.html',
 })
 export class DemoComponent implements OnInit {
-  @Input() demo: IDemo = { name: undefined };
+  @Input() demo: IDemo = { name: Demos.none, authRequired: true };
   @Input() config: IEmulator | undefined;
   @Output('emulatorEvents') emulatorEvents: EventEmitter<IConsoleEvent> =
     new EventEmitter<IConsoleEvent>();
@@ -21,6 +22,12 @@ export class DemoComponent implements OnInit {
   public handleConsoleEvents = (event: IConsoleEvent) => {
     this.emulatorEvents.emit(event);
   };
+
+  public get isAuth() {
+    return this.demoService.getStateProp('token');
+  }
+
+  constructor(public demoService: DemoService) {}
 
   ngOnInit(): void {
     if (this.demo && this.demo.name) {

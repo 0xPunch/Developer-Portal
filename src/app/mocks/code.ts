@@ -14,8 +14,6 @@ export const CodeGoodToKnowMock = (config: IGuideConfig): ICode => {
       {peyyaUserId}
       /** @type string - Bearer token. Needed for all (except authorization) endpoints. */
       {authToken}
-      /** @type string - Bank id. Needed for all bank consent endpoints. */
-      {bicFi}
     `,
   };
 };
@@ -47,7 +45,7 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
       }
 
       const body = {
-        phoneNumber: "+46 XXX XXXXXX"
+        phoneNumber: "+nn nn nnnnnnn"
       }
 
       const headers = { ...config }

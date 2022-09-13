@@ -5,6 +5,7 @@
       <li *ngFor="let segment of guide.segments">
         <a
           (click)="scrollToSegment(segment)"
+          *ngIf="!segment.hideInNav"
           class="py-2 block hover:text-lime-500 dark:hover:text-lime-500 hover:cursor-pointer"
           [ngClass]="{
             'text-lime-500': (ui.sectionInView | async) == segment.headline,
@@ -21,6 +22,7 @@
     <section
       *ngFor="let segment of guide.segments; last as isLast"
       [ngClass]="{ 'mb-32': !isLast }"
+      class="flex flex-col"
     >
       <h3
         appSectionInFocus
@@ -30,9 +32,18 @@
       >
         {{ segment.headline }}
       </h3>
+      <div class="w-9/12 flex flex-col my-4">
+        <img
+          [src]="'assets/' + segment.image"
+          *ngIf="segment.image"
+          class="max-h-48 self-center max-w-full"
+        />
+      </div>
+
       <p class="w-9/12 mb-8 dark:text-slate-300" *ngIf="segment.text">
         {{ segment.text }}
       </p>
+
       <ng-container *ngFor="let component of segment.components">
         <app-code
           *ngIf="component.type == componentTypes.code"

@@ -5,8 +5,19 @@
   {{ initializing ? "Initializing" : "Loading demo ... " }}
 </p>
 
+<div
+  class="w-full h-full absolute top-0 left-0 z-40 bg-red-400/70 flex items-center justify-center text-white text-2xl"
+  *ngIf="!isAuth && demo.authRequired"
+>
+  You need to be signed in.
+</div>
+
 <!-- container -->
-<div class="overflow-hidden h-full block" *ngIf="running && running != ''">
+<div
+  class="overflow-hidden h-full block"
+  *ngIf="running && running != ''"
+  [ngClass]="{ 'blur-sm': !isAuth && demo.authRequired }"
+>
   <app-auth
     class="h-full block"
     *ngIf="running == demos.auth"

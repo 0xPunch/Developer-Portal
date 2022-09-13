@@ -17,6 +17,7 @@ export interface IGuideComponent {
 export interface IGuideSegment {
   headline?: GuideHeadline;
   subHeadline?: GuideHeadline;
+  image?: string;
   text?: GuideText;
   hideInNav?: boolean;
   components?: Array<IGuideComponent>;
