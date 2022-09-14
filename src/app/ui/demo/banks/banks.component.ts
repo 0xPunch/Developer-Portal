@@ -95,6 +95,7 @@ export class BanksComponent implements OnInit {
   public handleInitConsentError = (error: HttpErrorResponse) => {
     return throwError(() => {
       this.showRestart = true;
+      this.waiting = false;
       const initConsentDone: IConsoleEvent = {
         message: 'Could not start a consent',
         type: ConsoleEventTypes.error,
@@ -124,6 +125,10 @@ export class BanksComponent implements OnInit {
         endpoint: `${ApiHost}${ApiEndpoints.banks}/consent/init`,
         data: {
           bicFi,
+        },
+        headers: {
+          Authorization:
+            `Bearer ${this.demoService.getStateProp('token')}` || '',
         },
       })
       .pipe(catchError(this.handleInitConsentError))
@@ -181,6 +186,10 @@ export class BanksComponent implements OnInit {
           consentId,
           bicFi,
         },
+        headers: {
+          Authorization:
+            `Bearer ${this.demoService.getStateProp('token')}` || '',
+        },
       })
       .pipe(catchError(this.handleInitConsentError))
       .subscribe((data) => {
@@ -217,6 +226,9 @@ export class BanksComponent implements OnInit {
         method: DemoRequestMethods.GET,
         endpoint: `${ApiHost}${ApiEndpoints.banks}/consent/status`,
         headers: {
+          Authorization:
+            `Bearer ${this.demoService.getStateProp('token')}` || '',
+
           consentAuthId: authorisationId,
           consentId,
           bicFi,

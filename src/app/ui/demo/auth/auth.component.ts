@@ -32,7 +32,55 @@ export class AuthComponent implements OnInit {
     public http: HttpClient,
     public appService: ApplicationService,
     public demo: DemoService
-  ) {}
+  ) {
+    demo.loadStateProp('token');
+  }
+
+  /**
+   * Inputs configs and events.
+   * Each input will have a config and events.
+   */
+  public inputs = {
+    phone: {
+      config: {
+        id: 'phone_number',
+        type: this.inputType.phone,
+        name: 'phone_number',
+        placeholder: 'Phone number',
+        initValue: this.authPhone,
+        label: 'Phone number',
+      },
+      valueChange: ($event: string) => this.handleInputChange($event, 'phone'),
+      valueInvalid: ($event: string) => this.handleInputError($event, 'phone'),
+    },
+    authRember: {
+      config: {
+        id: 'auth_remember',
+        type: this.inputType.checkbox,
+        name: 'auth_remember',
+        placeholder: 'Remember me',
+        initValue: false,
+        label: 'Remember me',
+      },
+      valueChange: ($event: string) => {
+        this.demo.updateState({ auth_remember: !!$event });
+      },
+    },
+    code: {
+      config: {
+        id: 'phone_number',
+        type: this.inputType.numberValidation,
+        name: 'phone_number',
+        placeholder: '0',
+        initValue: this.authPhone,
+        label: 'Code',
+      },
+      valueChange: ($event: string) =>
+        this.handleInputChange($event, 'numberValidation'),
+      valueInvalid: ($event: string) =>
+        this.handleInputError($event, 'numberValidation'),
+    },
+  };
 
   public handleAuthError = (error: HttpErrorResponse) => {
     return throwError(() => {
@@ -147,6 +195,10 @@ export class AuthComponent implements OnInit {
           token_type: data?.token_type,
           token_expires: data?.expires_in,
         });
+
+        if (this.demo.getStateProp('auth_remember')) {
+          this.demo.saveStateProp('token', data?.access_token);
+        }
       });
   };
 

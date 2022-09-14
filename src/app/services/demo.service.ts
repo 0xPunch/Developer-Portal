@@ -45,6 +45,16 @@ export class DemoService implements OnDestroy {
   public clearState = () => this._state$.next({});
 
   /**
+   * Save state prop
+   */
+  public saveStateProp = (key: string, value: any) =>
+    localStorage.setItem(`state_prop_${key}`, JSON.stringify(value));
+  public loadStateProp = (key: string) =>
+    this.updateState({
+      [key]: JSON.parse(localStorage.getItem(`state_prop_${key}`) || 'null'),
+    });
+
+  /**
    * Update methods for demos that needs to set currency and balance.
    * These will update the demo state.
    */

@@ -8,32 +8,22 @@
       <p *ngIf="phoneError" class="text-rose-500 my-2">{{ phoneError }}</p>
 
       <ui-input
-        [config]="{
-          id: 'phone_number',
-          type: inputType.phone,
-          name: 'phone_number',
-          placeholder: 'Phone number',
-          initValue: authPhone,
-          label: 'Phone number'
-        }"
-        (valueInvalid)="handleInputError($event, 'phone')"
-        (valueChange)="handleInputChange($event, 'phone')"
+        [config]="inputs.phone.config"
+        (valueInvalid)="inputs.phone.valueInvalid($event)"
+        (valueChange)="inputs.phone.valueChange($event)"
+      ></ui-input>
+      <ui-input
+        [config]="inputs.authRember.config"
+        (valueChange)="inputs.authRember.valueChange($event)"
       ></ui-input>
     </div>
 
     <div class="py-4" *ngIf="authorizeStarted">
       <p *ngIf="codeError" class="text-rose-500 my-2">{{ codeError }}</p>
       <ui-input
-        [config]="{
-          id: 'phone_number',
-          type: inputType.numberValidation,
-          name: 'phone_number',
-          placeholder: '0',
-          initValue: authPhone,
-          label: 'Code'
-        }"
-        (valueInvalid)="handleInputError($event, 'numberValidation')"
-        (valueChange)="handleInputChange($event, 'numberValidation')"
+        [config]="inputs.code.config"
+        (valueInvalid)="inputs.code.valueInvalid($event)"
+        (valueChange)="inputs.code.valueChange($event)"
       ></ui-input>
     </div>
 
@@ -86,7 +76,7 @@
 
   <ng-container *ngIf="authorized">
     <p class="font-bold text-2xl mb-8 text-lime-500">Success!</p>
-    <p>You're now authorized.</p>
+    <p class="dark:text-slate-300">You're now authorized.</p>
   </ng-container>
 
   <button

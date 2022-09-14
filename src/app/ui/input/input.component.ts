@@ -92,9 +92,16 @@ export class InputComponent implements OnInit {
       $event.preventDefault();
       $event.stopPropagation();
     }
-    const { value } = $event.target as any;
+    const { value, checked } = $event.target as any;
+    // Check input type.
+    const type: InputType = this.config.type;
 
-    this.value = value;
+    if (type === this.inputType.checkbox) {
+      this.value = checked;
+    } else {
+      this.value = value;
+    }
+
     await this.validateInput();
     this.valueChange.emit(this.value);
   };

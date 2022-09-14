@@ -1,5 +1,5 @@
-<div class="p-4 pt-10 rounded-3xl bg-white z-30 w-full relative h-full">
-  <h2 class="text-3xl font-bold mb-12 flex justify-between">
+<div class="p-4 pt-10 rounded-3xl z-30 w-full relative h-full">
+  <h2 class="text-3xl font-bold mb-12 flex justify-between dark:text-white">
     Wallet
     <div class="relative z-50" *ngIf="!waiting">
       <div
@@ -9,7 +9,7 @@
         {{ demoService.currency.code }}
       </div>
       <div
-        class="absolute top-full right-0 bg-white shadow-md text-sm rounded-xl p-2"
+        class="absolute top-full right-0 shadow-md text-sm rounded-xl p-2"
         *ngIf="showCurrencyPicker"
       >
         <ul class="p-0 m-0 list-none">
