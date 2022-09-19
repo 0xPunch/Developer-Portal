@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApplicationService } from 'src/app/services/applications.service';
 import { DeveloperService } from 'src/app/services/developer.service';
+import { PortalService } from 'src/app/services/portal.service';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -8,23 +10,20 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './container.component.html',
 })
 export class ContainerComponent {
-  apiOk = true;
+  public apiStatus$: Observable<boolean> = this.portal.getApiStatus$();
 
   @ViewChild('main') main: ElementRef;
 
   constructor(
     public developerService: DeveloperService,
     public applicationService: ApplicationService,
-    public ui: UiService
+    public ui: UiService,
+    public portal: PortalService
   ) {}
 
   async ngOnInit() {
-    try {
-      await this.developerService.getDeveloper();
-      await this.applicationService.getApplications();
-    } catch (error) {
-      this.apiOk = false;
-    }
+    await this.developerService.getDeveloper();
+    await this.applicationService.getApplications();
 
     try {
       let timer: any = null;

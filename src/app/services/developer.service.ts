@@ -7,8 +7,11 @@ import {
   Subscription,
   BehaviorSubject,
   filter,
+  Observable,
+  of,
 } from 'rxjs';
 import { ApiEndpoints, ApiHost } from '../constants/api';
+import { PortalService } from './portal.service';
 
 interface PeyyaWindow extends Window {
   Intercom: any;
@@ -43,30 +46,36 @@ export class DeveloperService implements OnDestroy {
 
   public handleError = (error: HttpErrorResponse) => {
     return throwError(() => {
-      console.error(error);
+      this.portal.updateApiStatus(false);
       throw new Error('Developer couldn´t be fetched');
     });
   };
 
   public getDeveloper = async () => {
     if (!this.developerSub$) {
-      this.developerSub$ = this.http
-        .get(`${ApiHost}${ApiEndpoints.developer}`)
-        .pipe(catchError(this.handleError))
-        .subscribe((response) => {
-          const developer = (response as DeveloperResponse).developer;
-          this.developerBehavior$?.next(developer);
+      try {
+        this.developerSub$ = this.http
+          .get(`${ApiHost}${ApiEndpoints.developer}`)
+          .pipe(catchError(this.handleError))
+          .subscribe((response) => {
+            this.portal.updateApiStatus(true);
+            const developer = (response as DeveloperResponse).developer;
+            this.developerBehavior$?.next(developer);
 
-          if (window) {
-            window.Intercom('boot', {
-              api_base: 'https://api-iam.intercom.io',
-              app_id: 'ohflijrp',
-              name: developer.name, // Full name
-              email: developer.email, // Email address
-              created_at: '1312182000', // Signup date as a Unix timestamp
-            });
-          }
-        });
+            if (window) {
+              window.Intercom('boot', {
+                api_base: 'https://api-iam.intercom.io',
+                app_id: 'ohflijrp',
+                name: developer.name, // Full name
+                email: developer.email, // Email address
+                created_at: '1312182000', // Signup date as a Unix timestamp
+              });
+            }
+          });
+      } catch (error) {
+        debugger;
+        throw error;
+      }
     }
   };
 
@@ -76,7 +85,11 @@ export class DeveloperService implements OnDestroy {
     }
   }
 
-  constructor(public http: HttpClient, public router: Router) {
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public portal: PortalService
+  ) {
     if (window) {
       router.events
         .pipe(filter((event) => event instanceof NavigationStart))

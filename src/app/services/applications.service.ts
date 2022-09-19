@@ -1,3 +1,4 @@
+import { PortalService } from './portal.service';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -58,6 +59,7 @@ export class ApplicationService {
         this.applicationsBehavior$?.next(
           (response as ApplicationResponse).applications
         );
+        this.portal.updateApiStatus(true);
         this.isGettingApplications$.next(false);
         this.applicationsSub$?.unsubscribe();
       });
@@ -91,6 +93,7 @@ export class ApplicationService {
         catchError(this.handleGetApplicationError),
         map((response) => {
           this.isGettingApplication$.next(false);
+          this.portal.updateApiStatus(true);
           return response;
         })
       );
@@ -115,6 +118,7 @@ export class ApplicationService {
       this.isGettingApplications$.next(false);
       this.gettingApplicationsError$.next(true);
       this.applicationsSub$?.unsubscribe();
+      this.portal.updateApiStatus(false);
       throw new Error('Applications couldn´t be fetched');
     });
   };
@@ -123,6 +127,7 @@ export class ApplicationService {
     return throwError(() => {
       this.gettingApplicationError$.next(true);
       this.isGettingApplication$.next(false);
+      this.portal.updateApiStatus(false);
       throw new Error('Applications couldn´t be fetched');
     });
   };
@@ -141,5 +146,5 @@ export class ApplicationService {
     }
   };
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, public portal: PortalService) {}
 }
