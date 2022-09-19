@@ -21,7 +21,6 @@ export class AuthComponent implements OnInit {
   public waiting = false;
   public showRestart = false;
   public authorizeStarted = false;
-  public authorized = false;
   public inputType = InputType;
   public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   @Input() config: IEmulator | undefined;
@@ -33,7 +32,23 @@ export class AuthComponent implements OnInit {
     public appService: ApplicationService,
     public demo: DemoService
   ) {
+    // Load state from save.
     demo.loadStateProp('token');
+    demo.loadStateProp('token_expires');
+    if (!demo.getStateProp('token_expires')) {
+      demo.deleteStateProp('token');
+      demo.updateState({ token: null });
+    }
+  }
+
+  /**
+   * Check if user in demo is authorized.
+   *
+   */
+  public get isAuth() {
+    const expire = this.demo.getStateProp('token_expires');
+    if (!expire) return false;
+    return this.demo.getStateProp('token');
   }
 
   /**
@@ -82,7 +97,7 @@ export class AuthComponent implements OnInit {
     },
   };
 
-  public handleAuthError = (error: HttpErrorResponse) => {
+  private handleAuthError = (error: HttpErrorResponse) => {
     return throwError(() => {
       this.showRestart = true;
       const authFailed: IConsoleEvent = {
@@ -143,7 +158,7 @@ export class AuthComponent implements OnInit {
       });
   };
 
-  public validateAuthorizing = () => {
+  private validateAuthorizing = () => {
     const endpoint = this.config?.config?.ApiEndpoints?.['authValidate'];
     const host = this.config?.config?.ApiHost;
     const full = `${host}${endpoint}`;
@@ -180,7 +195,6 @@ export class AuthComponent implements OnInit {
       .pipe(catchError(this.handleAuthError))
       .subscribe((data: any) => {
         this.authorizeStarted = false;
-        this.authorized = true;
         this.showRestart = true;
         this.waiting = false;
         const authorizingDone: IConsoleEvent = {
@@ -198,13 +212,16 @@ export class AuthComponent implements OnInit {
 
         if (this.demo.getStateProp('auth_remember')) {
           this.demo.saveStateProp('token', data?.access_token);
+          this.demo.saveStateProp('token_expires', data?.expires_in);
         }
       });
   };
 
   public restart = ($event: Event) => {
     $event.preventDefault();
-    this.authorized = false;
+    this.demo.deleteStateProp('token');
+    this.demo.deleteStateProp('token_expires');
+    this.demo.updateState({ token: null, token_expires: null });
     this.authorizeStarted = false;
     this.showRestart = false;
     this.error$.next(null);

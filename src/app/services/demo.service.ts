@@ -53,6 +53,8 @@ export class DemoService implements OnDestroy {
     this.updateState({
       [key]: JSON.parse(localStorage.getItem(`state_prop_${key}`) || 'null'),
     });
+  public deleteStateProp = (key: string) =>
+    localStorage.removeItem(`state_prop_${key}`);
 
   /**
    * Update methods for demos that needs to set currency and balance.

@@ -121,6 +121,11 @@ export class WalletComponent implements OnInit {
       this.showRestart = true;
       return;
     }
-    this.wallet.getWallet();
+    try {
+      await this.wallet.getWallet();
+    } catch (error) {
+      this.error$.next('Problem getting wallet. Please try again.');
+      this.showRestart = true;
+    }
   }
 }

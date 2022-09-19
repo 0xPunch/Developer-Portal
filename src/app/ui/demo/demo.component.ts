@@ -24,6 +24,8 @@ export class DemoComponent implements OnInit {
   };
 
   public get isAuth() {
+    const expire = this.demoService.getStateProp('token_expires');
+    if (!expire) return false;
     return this.demoService.getStateProp('token');
   }
 
