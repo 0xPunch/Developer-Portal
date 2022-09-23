@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://localhost:5000/v1',
+  apiHost: 'http://localhost:5002/v1',
   auth: {
     domain: 'dev-ibqj5g5m.us.auth0.com',
     clientId: '18KmUu5qurxczk50GaZ3eCxQy8zD5H5O',
@@ -19,7 +19,7 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: 'http://localhost:5000/v1/developer',
+          uri: 'http://localhost:5002/v1/developer',
           tokenOptions: {
             // The attached token should target this audience
             audience: 'https://dev-ibqj5g5m.us.auth0.com/api/v2/',
@@ -30,7 +30,7 @@ export const environment = {
         },
         {
           // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-          uri: 'http://localhost:5000/v1/developer/*',
+          uri: 'http://localhost:5002/v1/developer/*',
           tokenOptions: {
             // The attached token should target this audience
             audience: 'https://dev-ibqj5g5m.us.auth0.com/api/v2/',

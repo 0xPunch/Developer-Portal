@@ -140,7 +140,6 @@ export class AuthComponent implements OnInit {
         {
           headers: {
             client_id,
-            client_secret,
           },
         }
       )
@@ -162,6 +161,7 @@ export class AuthComponent implements OnInit {
     const endpoint = this.config?.config?.ApiEndpoints?.['authValidate'];
     const host = this.config?.config?.ApiHost;
     const full = `${host}${endpoint}`;
+
     this.waiting = true;
     this.error$.next(null);
     const authorizingEvent: IConsoleEvent = {
@@ -187,8 +187,7 @@ export class AuthComponent implements OnInit {
         },
         {
           headers: {
-            client_id,
-            client_secret,
+            client_id
           },
         }
       )

@@ -24,7 +24,6 @@ export const CodeMock = (config: IGuideConfig): ICode => {
     style: CodeStyles.default,
     snippet: `
       const config = {
-        client_secret: "${config.client_secret}",
         client_id: "${config.client_id}"
       }
     `,
@@ -37,10 +36,12 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
     style: CodeStyles.default,
     snippet: `
 
+      //# - Step 1
+      // Initate authorization by passing client_id in the headers
+      // And phoneNumber in the body. Important with the format.
       const url = "${config.ApiHost}${config.ApiEndpoints?.['auth']}";
 
       const config = {
-        client_secret: "${config.client_secret}",
         client_id: "${config.client_id}"
       }
 
@@ -51,6 +52,29 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
       const headers = { ...config }
 
       axios.post(url, data, headers).then((response) => { ... })
+
+      //# - Step 2. 
+      // If step 1 was successful. Go ahead and do the next call.
+      // Once the user gets a sms with a code.
+      // You need to do a new request to the validation endpoint.
+      // Same headers. But this time you need to add the otp in the body together with phoneNumber.
+
+      const validationUrl = "${config.ApiHost}${config.ApiEndpoints?.['authValidate']}";
+
+      const validationConfig = {
+        client_id: "${config.client_id}"
+      }
+
+      const validationBody = {
+        phoneNumber: "+nn nn nnnnnnn",
+        otp: "xxxxxx"
+      }
+
+      const validationHeaders = { ...validationConfig }
+
+      axios.post(validationUrl, validationBody, validationHeaders).then((response) => { ... })
+
+      // IF everything is successful you'll get an accesstoken object.
 
     `,
   };
