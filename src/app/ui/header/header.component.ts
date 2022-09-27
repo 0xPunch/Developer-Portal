@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService as AngularAuthService } from '@auth0/auth0-angular';
 import { UiService, Theme } from 'src/app/services/ui.service';
+import { DeveloperService } from 'src/app/services/developer.service';
 
 @Component({
   selector: 'ui-header',
@@ -54,6 +55,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public angularAuth: AngularAuthService,
+    public devService: DeveloperService,
     public router: Router,
     public ui: UiService
   ) {}

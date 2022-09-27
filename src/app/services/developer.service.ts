@@ -30,7 +30,7 @@ interface DeveloperResponse {
 })
 export class DeveloperService implements OnDestroy {
   private developerSub$: Subscription | undefined;
-  private developerBehavior$: BehaviorSubject<any> | undefined;
+  private developerBehavior$: BehaviorSubject<any> | undefined = new BehaviorSubject(undefined);
 
   public createDeveloper = async (name: string = 'Test namn') => {
     try {
@@ -51,6 +51,31 @@ export class DeveloperService implements OnDestroy {
     });
   };
 
+  private timeout: any;
+  public updateDeveloper = async (object: { [key: string]: string }) => {
+    const current = this.developerBehavior$?.value;
+    this.developerBehavior$?.next({ ...current, ...object });
+
+    if(this.timeout){
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(() => {
+      this.developerSub$ = this.http
+          .patch(`${ApiHost}${ApiEndpoints.developer}`, this.developerBehavior$?.value)
+          .pipe(catchError(this.handleError))
+          .subscribe((response) => {
+            this.portal.updateApiStatus(true);
+            this.developerSub$?.unsubscribe();
+          })
+
+    }, 5000);
+  }
+
+  public developer$ = () => {
+    return this.developerBehavior$?.asObservable();
+  }
+
   public getDeveloper = async () => {
     if (!this.developerSub$) {
       try {
@@ -61,6 +86,8 @@ export class DeveloperService implements OnDestroy {
             this.portal.updateApiStatus(true);
             const developer = (response as DeveloperResponse).developer;
             this.developerBehavior$?.next(developer);
+
+            this.developerSub$?.unsubscribe();
 
             if (window) {
               window.Intercom('boot', {

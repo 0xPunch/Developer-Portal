@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService as AngularAuthService } from '@auth0/auth0-angular';
-import { GetProvider } from 'src/app/constants/auth';
+import { GetProvider, Avatars } from 'src/app/constants/auth';
+import { DeveloperService } from 'src/app/services/developer.service';
 
 @Component({
   selector: 'route-preferences',
@@ -8,13 +9,29 @@ import { GetProvider } from 'src/app/constants/auth';
   styleUrls: ['./preferences.component.scss'],
 })
 export class PreferencesComponent implements OnInit {
+
+  public avatars = Avatars;
+
+
   public getUser$ = () => {
     return this.angularAuth.user$;
   };
 
+  public updateAvatar = (value: string) => {
+    this.developerService.updateDeveloper({
+      avatar : value
+    });
+  }
+
+  public updateRole = (value: string) => {
+    this.developerService.updateDeveloper({
+      role: value
+    })
+  }
+
   public getProvider = GetProvider;
 
-  constructor(public angularAuth: AngularAuthService) {}
+  constructor(public angularAuth: AngularAuthService, public developerService: DeveloperService) {}
 
   ngOnInit() {}
 }

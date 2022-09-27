@@ -6,9 +6,10 @@
       class="flex flex-row cursor-pointer z-50"
       (click)="toggleUserNav()"
     >
+    <ng-container *ngIf="devService.developer$() | async as developer">
       <div id="user-info" class="text-right mr-4">
         <div id="user-info-role" class="text-base text-slate-400">
-          Developer
+          {{ developer.role || "Developer"}}
         </div>
         <div
           id="user-info-name"
@@ -18,11 +19,13 @@
         </div>
       </div>
       <div id="user-image">
-        <img
-          src="https://d1lss44hh2trtw.cloudfront.net/resize?type=webp&url=https%3A%2F%2Fshacknews-www.s3.amazonaws.com%2Fassets%2Farticle%2F2022%2F01%2F26%2Fbayc-racism_feature.jpg&width=1032&sign=f4LcTNAnRNHFwIXtO9O9WaQU78Ny6X5mT-ArULv2gp4"
-          class="w-14 h-14 rounded-full border-4 border-slate-50 object-cover"
-        />
+        
+          <img
+            [src]="developer.avatar || 'https://d1lss44hh2trtw.cloudfront.net/resize?type=webp&url=https%3A%2F%2Fshacknews-www.s3.amazonaws.com%2Fassets%2Farticle%2F2022%2F01%2F26%2Fbayc-racism_feature.jpg&width=1032&sign=f4LcTNAnRNHFwIXtO9O9WaQU78Ny6X5mT-ArULv2gp4'"
+            class="w-14 h-14 rounded-full border-4 border-slate-50 object-cover"
+          />
       </div>
+    </ng-container>
     </div>
     <div id="back" *ngIf="canGoBack()">
       <button
