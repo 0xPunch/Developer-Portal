@@ -72,7 +72,7 @@ export const GuideWelcomeSegmentMock = (
 ): IGuideSegment => {
   return {
     hideInNav: true,
-    image: 'undraw_astronaut_re_8c33.svg',
+    image: 'undraw_runner_start_x-0-uu.svg',
   };
 };
 
@@ -81,11 +81,21 @@ export const GuideStartSegmentMock = (config: IGuideConfig): IGuideSegment => {
     headline: 'Getting started',
     text: `
       Hi and welcome to the API section of the portal. Here you will find demo's and code examples for all segments.
-      If you have any trouble or want provide with some improvements or new cool ideas. Please feel free to share them with us.
+      If you have any trouble or want to provide with some improvements or new cool ideas. Please feel free to share them with us.
       We always strive to be better.
     `,
     hideInNav: false,
+    
     components: [],
+  };
+};
+
+export const GuideGoodToKnowImageSegmentMock = (
+  config: IGuideConfig
+): IGuideSegment => {
+  return {
+    hideInNav: true,
+    image: 'undraw_engineering_team_a7n2.svg',
   };
 };
 
@@ -161,7 +171,13 @@ export const GuideConnectBankSegmentMock = (
 ): IGuideSegment => {
   return {
     headline: 'Connect bank',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde eos vel eligendi facilis aspernatur, nihil assumenda quisquam dolor? Nihil commodi facilis, totam eveniet aut ea modi necessitatibus rerum reprehenderit sit?',
+    text: `
+      To be able to create seamless transactions. A user needs to be connected to a bank.
+      Do this by fetching banks for your users country. In our demo, Sweden is the default.
+      This should return a list of banks. Every bank contains a label, image, and id (bicFi).
+      Then initiate the consent by passing the selected bank bicFi.
+      This should return a selection of authorization options. The user must now pick an option.
+    `,
     hideInNav: false,
     components: [
       GuideConnectBankCodeComponent(config),
@@ -266,6 +282,7 @@ export const GuideMock = (config: IGuideConfig): IGuide => {
       GuideStartSegmentMock(config),
       GuideWelcomeSegmentMock(config),
       GuideGoodToKnowSegmentMock(config),
+      GuideGoodToKnowImageSegmentMock(config),
       GuideAuthSegmentMock(config),
       GuideCompleteAccountSegmentMock(config),
       GuideConnectBankSegmentMock(config),

@@ -135,7 +135,12 @@ export const CodeConnectBankMock = (config: IGuideConfig): ICode => {
       const url = "${config.ApiHost}${config.ApiEndpoints?.['banks']}/consent/auth";
 
       const headers = { authorization: {authToken} }
-      const body = { bicFi: {bicFi}, consentId: {consentId} }
+      const body = { 
+        authMethodId: {authenticationMethodId},
+        consentAuthId: {authorisationId},
+        bicFi: {bicFi}, 
+        consentId: {consentId} 
+      }
       axios.post(url, body, headers).then((response) => { ... });
 
       /**

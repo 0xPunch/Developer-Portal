@@ -4,6 +4,7 @@ export const ApiEndpoints = {
   developer: '/developer',
   wallet: '/wallet',
   payment: '/payment',
+  transactions: "/transactions",
   banks: '/banks',
   application: '/developer/application',
   auth: '/authorize/phone',

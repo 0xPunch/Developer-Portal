@@ -3,8 +3,9 @@ import { IEmulator } from 'src/app/models/emulator';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ConsoleEventTypes, IConsoleEvent } from 'src/app/models/console';
 import { v4 as uuidv4 } from 'uuid';
-import { DemoService } from 'src/app/services/demo.service';
+import { DemoRequestMethods, DemoService } from 'src/app/services/demo.service';
 import { countries } from 'countries-list';
+import { ApiEndpoints, ApiHost } from 'src/app/constants/api';
 
 interface BanksResult {
   status: string;
@@ -119,6 +120,25 @@ export class SendMoneyComponent implements OnInit {
     };
 
     this.consoleEvent.emit(transactionInitEvent);
+
+    const request = new Promise((resolve, rejects) => {
+      this.demo.request({
+        method: DemoRequestMethods.POST,
+        endpoint: `${ApiHost}${ApiEndpoints.transactions}/send`,
+        headers: {
+          Authorization:
+            `Bearer ${this.demo.getStateProp('token')}` || '',
+        },
+      }).subscribe((response) => {
+        if(response){
+          return resolve(response);
+        }
+        rejects();
+      });
+      
+    })
+
+    const response = await request;
 
     this.showTransaction = false;
     this.waiting = true;
