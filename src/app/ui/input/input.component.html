@@ -8,7 +8,7 @@
   }"
 >
   <label
-    class="mb-2 block font-medium"
+    class="mb-2 block font-medium text-indigo-500"
     *ngIf="config.label"
     [for]="config.id || ''"
     >{{ config.label }}</label
@@ -24,7 +24,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900 caret-fuchsia-500"
       />
     </ng-container>
 
@@ -37,7 +37,7 @@
         [value]="value"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900 caret-fuchsia-500"
       />
     </ng-container>
 
@@ -50,7 +50,7 @@
         [name]="config.name"
         [disabled]="config.disabled"
         [placeholder]="config.placeholder"
-        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900"
+        class="block w-full px-4 py-3 border-t-2 mt-4 rounded-md shadow-inner border-slate-300 outline-none bg-slate-100 dark:bg-slate-900 caret-fuchsia-500"
       />
     </ng-container>
 
@@ -132,13 +132,14 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="inputType.select">
+
       <select
-        class="block w-full px-4 py-3 rounded-md shadow-md outline-none dark:bg-slate-800 cursor-pointer hover:shadow-lg"
-        (select)="handleChange($event)"
+        class="block w-full px-4 py-3 rounded-md shadow-md outline-none dark:bg-slate-800 cursor-pointer hover:shadow-lg caret-fuchsia-500"
+        (input)="handleChange($event)"
         [value]="value"
         [disabled]="config.disabled"
       >
-        <option *ngFor="let option of config.options" [value]="option.value">
+        <option *ngFor="let option of config.options" [selected]="option.value === value" [value]="option.value">
           {{ option.text }}
         </option>
       </select>

@@ -1,3 +1,5 @@
+import { Avatar, Role } from "../models/user";
+
 interface ProviderConfig {
   name: string;
   logo: string;
@@ -31,6 +33,20 @@ export const Avatars = {
   doge: '/assets/45AB4EDB-AF53-41BA-9B22-74F640611FF5.jpeg',
   poloar: '/assets/95A162CD-EDCE-4020-95A1-A497E2D731AE.jpeg',
 }
+
+export const Roles: Role[] = [
+  {
+    name: 'Developer',
+  },
+  {
+    name: 'Merchant'
+  },
+  {
+    name: 'Product developer'
+  }
+
+]
+
 
 export const GetProvider = (name: string | undefined) => {
   let providerConfig: any = null;

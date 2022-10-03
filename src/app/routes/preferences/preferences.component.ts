@@ -11,6 +11,7 @@ import { DeveloperService } from 'src/app/services/developer.service';
 export class PreferencesComponent implements OnInit {
 
   public avatars = Avatars;
+  public developer$ = this.developerService.developer$();
 
 
   public getUser$ = () => {

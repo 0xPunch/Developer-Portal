@@ -88,6 +88,7 @@ export class InputComponent implements OnInit {
    * @param $event
    */
   public handleChange = async ($event: Event) => {
+    
     if ($event) {
       $event.preventDefault();
       $event.stopPropagation();

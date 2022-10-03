@@ -1,9 +1,10 @@
-<section class="p-10 relative" *ngIf="getUser$() | async as user">
+<section class="p-10 relative" >
   <h1 class="text-5xl font-bold mb-12 dark:text-white">Preferences</h1>
 
   <h2 class="text-2xl font-bold mb-8 dark:text-slate-300">Basic</h2>
   <div
     class="rounded-xl shadow-lg p-10 py-8 mb-10 relative dark:bg-slate-700 flex flex-col gap-8"
+    *ngIf="getUser$() | async as user; else noUser"
   >
     <div>
       <label class="mb-4 block font-medium dark:text-slate-300">Name</label>
@@ -60,28 +61,21 @@
     </div>
   </div>
 
-  <h2 class="text-2xl font-bold mb-8 dark:text-slate-300">Role</h2>
-  <div
-    class="rounded-xl shadow-lg p-10 py-8 mb-10 relative dark:bg-slate-700 flex flex-col gap-6"
-  >
-    <div>
-      <label class="mb-4 block font-medium dark:text-slate-300">Role</label>
-      <div class="dark:text-white text-xl flex flex-row gap-3 items-center">
-        Developer
-      </div>
+  <ng-template #noUser>
+    <div class="rounded-xl shadow-lg p-10 py-8 mb-10 relative dark:bg-slate-700 flex flex-col gap-8">
+      <p>No user could be fetched. Please reload or log out and log in again.</p>
     </div>
-  </div>
+  </ng-template>
 
-  <h2 class="text-2xl font-bold mb-8 dark:text-slate-300">Avatar</h2>
-  <div
-    class="rounded-xl shadow-lg p-10 py-8 mb-10 relative dark:bg-slate-700 flex flex-col gap-6"
-  >
-    <div class="flex gap-4">
-      <div *ngFor="let avatar of avatars | keyvalue" (click)="updateAvatar(avatar.value)" class="w-20 cursor-pointer aspect-square rounded-md shadow-lg hover:shadow-xl overflow-hidden">
-        <img [src]="avatar.value" class="object-cover hover:scale-110 origin-center transition-transform" />
-      </div>
-    </div>
-  </div>
+  <ng-container *ngIf="developer$ | async as developer">
+
+
+    <ui-preference-role [role]="developer.role" (valueChange)="updateRole($event)"></ui-preference-role>
+
+    <ui-preference-avatar [avatar]="developer.avatar" (valueChange)="updateAvatar($event)"></ui-preference-avatar>
+   
+  </ng-container>
+  
 
   <footer class="flex flex-row-reverse mt-20">
     <button

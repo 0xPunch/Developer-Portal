@@ -14,11 +14,16 @@ export enum InputTheme {
   light = 'light',
 }
 
+export interface InputOption {
+  value: any;
+  text: string;
+}
+
 export interface IInput {
   type: InputType;
   id?: string;
   initValue?: any;
-  options?: any[];
+  options?: InputOption[] | any[];
   required?: boolean;
   disabled?: boolean;
   name?: string;
