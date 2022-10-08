@@ -27,11 +27,12 @@ export const Providers: Provider = {
 };
 
 export const Avatars = {
-  panda: '/assets/E065C295-62AF-4569-B938-2DEC8A918BC0.jpeg',
-  giraff: '/assets/B47EA725-E11F-4C58-A334-A6452B8E56C0.jpeg',
-  koala: '/assets/EC6AA3BC-44D3-45A2-AEF9-22C319B1B811.jpeg',
-  doge: '/assets/45AB4EDB-AF53-41BA-9B22-74F640611FF5.jpeg',
-  poloar: '/assets/95A162CD-EDCE-4020-95A1-A497E2D731AE.jpeg',
+  panda: '/assets/panda-avatar.jpeg',
+  giraff: '/assets/giraff-avatar.jpeg',
+  koala: '/assets/koala-avatar.jpeg',
+  doge: '/assets/dog-avatar.jpeg',
+  polar: '/assets/polar-bear-avatar.jpeg',
+  lion: '/assets/lion-avatar.jpeg'
 }
 
 export const Roles: Role[] = [

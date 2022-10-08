@@ -77,11 +77,18 @@
   </ng-container>
   
 
-  <footer class="flex flex-row-reverse mt-20">
+  <footer class="flex flex-row-reverse mt-20 gap-4">
+    
     <button
       class="px-8 py-4 rounded-xl bg-rose-500 text-white uppercase font-bold hover:shadow-xl"
     >
       Delete me
     </button>
+    <button
+        (click)="logOut()"
+        class="px-8 py-4 rounded-xl bg-red-400 text-white uppercase font-bold hover:shadow-xl"
+      >
+        Log me out, please
+      </button>
   </footer>
 </section>

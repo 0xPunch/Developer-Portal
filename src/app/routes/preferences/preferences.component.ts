@@ -24,6 +24,10 @@ export class PreferencesComponent implements OnInit {
     });
   }
 
+  public logOut = () => {
+    this.angularAuth.logout();
+  };
+
   public updateRole = (value: string) => {
     this.developerService.updateDeveloper({
       role: value
