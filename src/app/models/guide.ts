@@ -30,6 +30,7 @@ export interface IGuide {
 export interface IGuideConfig {
   client_secret: string;
   client_id: string;
+  use_credentials?: boolean;
   name?: string;
   ApiHost?: string;
   ApiEndpoints?: { [key: string]: string };

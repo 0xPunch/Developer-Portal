@@ -23,6 +23,19 @@ export class ConfigsComponent {
     this.showSecret = !this.showSecret;
   };
 
+  public updateUseClientCredentials = () => {
+    if (this.application) {
+      this.application.use_credentials = !this.application.use_credentials;
+      this.updateApiType();
+    }
+  }
+
+  private updateApiType = () => {
+    if (this.application) {
+      this.applicationService.updateApplication(this.application.id, this.application);
+    }
+  }
+
   public confirmRemoval = () => {
     const application = this.applicationService.applicationBehavior$.value;
     if (application) {
@@ -48,5 +61,5 @@ export class ConfigsComponent {
   constructor(
     public applicationService: ApplicationService,
     public router: Router
-  ) {}
+  ) { }
 }

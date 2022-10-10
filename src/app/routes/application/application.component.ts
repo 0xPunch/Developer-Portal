@@ -75,6 +75,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
           client_secret: `${this.application?.client_secret}`,
           client_id: `${this.application?.client_id}`,
           name: `${this.application.name}`,
+          use_credentials: this.application.use_credentials,
           ApiHost,
           ApiEndpoints,
         });

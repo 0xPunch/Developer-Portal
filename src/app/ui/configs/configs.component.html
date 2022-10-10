@@ -11,8 +11,22 @@
     ></ui-input>
   </div>
 
+  <div class="py-4 max-w-xs">
+    <ui-input [config]="{
+      id: 'client_credentials',
+      type: inputType.checkbox,
+      initValue: application.use_credentials,
+      label: 'Use client credentials'
+    }"
+    (valueChange)="updateUseClientCredentials()"
+    >
+
+    </ui-input>
+  </div>
+
   <div class="py-4 pr-20 relative">
     <ui-input
+    *ngIf="application.use_credentials"
       [config]="{
         id: 'client_secret',
         type: showSecret ? inputType.text : inputType.password,
@@ -41,6 +55,8 @@
       </svg>
     </button>
   </div>
+
+  
 </form>
 
 <footer class="flex flex-row-reverse mt-20">

@@ -41,9 +41,12 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
       // And phoneNumber in the body. Important with the format.
       const url = "${config.ApiHost}${config.ApiEndpoints?.['auth']}";
 
-      const config = {
+      ${ config.use_credentials ? `const config = {
+        client_id: "${config.client_id}",
+        client_secret: "${config.client_secret}"
+      }` : `const validationConfig = {
         client_id: "${config.client_id}"
-      }
+      }` }
 
       const body = {
         phoneNumber: "+nn nn nnnnnnn"
@@ -61,9 +64,12 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
 
       const validationUrl = "${config.ApiHost}${config.ApiEndpoints?.['authValidate']}";
 
-      const validationConfig = {
+      ${ config.use_credentials ? `const validationConfig = {
+        client_id: "${config.client_id}",
+        client_secret: "${config.client_secret}"
+      }` : `const validationConfig = {
         client_id: "${config.client_id}"
-      }
+      }` }
 
       const validationBody = {
         phoneNumber: "+nn nn nnnnnnn",
