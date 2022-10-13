@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    APP_NAME: "	Peyya_Portal_Build"
+    
 phases:
   install:
     runtime-versions:
@@ -16,6 +16,6 @@ phases:
   post_build:
     commands:
       - echo build process finished, we should uplload to S3 now
-      - cd dist/$APP_NAME
+      - cd dist
       - ls -la
       - aws s3 sync . s3://my-awsome-bucket-of-files --delete
