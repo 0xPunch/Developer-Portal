@@ -32,6 +32,13 @@
     (consoleEvent)="handleConsoleEvents($event)"
   ></app-create-account>
 
+  <demo-kyc class="h-full block"
+  *ngIf="running == demos.kyc"
+  [config]="config"
+  (consoleEvent)="handleConsoleEvents($event)">
+
+  </demo-kyc>
+
   <app-banks
     class="h-full block"
     *ngIf="running == demos.banks"

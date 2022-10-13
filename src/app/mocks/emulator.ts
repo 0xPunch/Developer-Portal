@@ -2,6 +2,18 @@ import { IGuideConfig } from 'src/app/models/guide';
 import { IEmulator } from 'src/app/models/emulator';
 import { Demos } from './demo';
 
+export const EmulatorKYCMock = (config: IGuideConfig): IEmulator => {
+  return {
+    name: 'KYC',
+    toggleApi: true,
+    segment: {
+      name: Demos.kyc,
+      authRequired: true
+    },
+    config
+  }
+}
+
 export const EmulatorCreateUserMock = (config: IGuideConfig): IEmulator => {
   return {
     name: 'Update new user',

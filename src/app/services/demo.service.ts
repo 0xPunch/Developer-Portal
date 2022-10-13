@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError, Subscription, BehaviorSubject } from 'rxjs';
+import { catchError, throwError, Subscription, BehaviorSubject, Observable, filter, find, map } from 'rxjs';
 import { ApiEndpoints, ApiHost } from '../constants/api';
 import { currencies, walletBalance } from '../constants/demo';
 import { countries } from 'countries-list';
@@ -40,6 +40,9 @@ export class DemoService implements OnDestroy {
 
   public getState = () => this._state$.asObservable();
   public getStateProp = (key: string) => this._state$.value[key];
+  public getStateProp$ = (key: string) => this._state$.asObservable().pipe(map((_state) => {
+    return _state[key]
+  }));
   public updateState = (patch: any) =>
     this._state$.next({ ...this._state$.value, ...patch });
   public clearState = () => this._state$.next({});
@@ -88,18 +91,18 @@ export class DemoService implements OnDestroy {
     });
   };
 
-  public request = (config: DemoRequest) => {
+  public request = <T>(config: DemoRequest) => {
     switch (config.method) {
       case DemoRequestMethods.GET:
-        return this.http.get(config.endpoint, { headers: config.headers });
+        return this.http.get(config.endpoint, { headers: config.headers }) as Observable<T>;
       case DemoRequestMethods.POST:
         return this.http.post(config.endpoint, config.data, {
           headers: config.headers,
-        });
+        }) as Observable<T>;
       case DemoRequestMethods.PATCH:
         return this.http.patch(config.endpoint, config.data, {
           headers: config.headers,
-        });
+        }) as Observable<T>;
     }
   };
 

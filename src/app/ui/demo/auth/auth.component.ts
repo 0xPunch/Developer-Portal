@@ -140,6 +140,7 @@ export class AuthComponent implements OnInit {
         {
           headers: {
             client_id,
+            client_secret
           },
         }
       )
@@ -187,7 +188,8 @@ export class AuthComponent implements OnInit {
         },
         {
           headers: {
-            client_id
+            client_id,
+            client_secret
           },
         }
       )

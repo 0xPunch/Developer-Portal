@@ -12,6 +12,7 @@ import {
   EmulatorWalletTransferMock,
   EmulatorPaymentMock,
   EmulatorSendMoneyMock,
+  EmulatorKYCMock,
 } from './emulator';
 import {
   CodeConnectBankMock,
@@ -57,6 +58,15 @@ export const GuideAuthEmulatorComponent = (
     config: EmulatorAuthUserMock(config),
   };
 };
+
+export const GuideKYCEmulatorComponent = (
+  config: IGuideConfig
+): IGuideComponent => {
+  return {
+    type: GuideComponentTypes.emulator,
+    config: EmulatorKYCMock(config)
+  }
+}
 
 export const GuideCreateAccountEmulatorComponent = (
   config: IGuideConfig
@@ -131,6 +141,20 @@ export const GuideAuthSegmentMock = (config: IGuideConfig): IGuideSegment => {
     ],
   };
 };
+
+export const GuideKYCSegmentMock = (
+  config: IGuideConfig
+): IGuideSegment => {
+  return {
+    headline: 'KYC',
+    text: 'You need to complete your account to do any further actions. \n Complete your account by calling user endpoint with your {peyyaUserId}. In your body you need to pass {firstName} and {lastName}. You´ll always need your {authToken} in your headers. See example below.',
+    hideInNav: false,
+    components: [
+      GuideCreateAccountCodeComponent(config),
+      GuideKYCEmulatorComponent(config)
+    ]
+  }
+}
 
 export const GuideCompleteAccountSegmentMock = (
   config: IGuideConfig
@@ -284,7 +308,7 @@ export const GuideMock = (config: IGuideConfig): IGuide => {
       GuideGoodToKnowSegmentMock(config),
       GuideGoodToKnowImageSegmentMock(config),
       GuideAuthSegmentMock(config),
-      GuideCompleteAccountSegmentMock(config),
+      GuideKYCSegmentMock(config),
       GuideConnectBankSegmentMock(config),
       GuideTransferBankSegmentMock(config),
       GuideSendMoneySegmentMock(config),

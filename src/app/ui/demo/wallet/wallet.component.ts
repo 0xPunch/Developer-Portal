@@ -28,6 +28,7 @@ export class WalletComponent implements OnInit {
   public showCurrencyPicker = false;
   public transferError: string | null = null;
   public error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public wallet$ = this.demoService.getStateProp$("wallet");
 
   @Input() config: IEmulator | undefined;
   @Output('consoleEvent') consoleEvent: EventEmitter<IConsoleEvent> =
@@ -123,6 +124,7 @@ export class WalletComponent implements OnInit {
     }
     try {
       await this.wallet.getWallet();
+      
     } catch (error) {
       this.error$.next('Problem getting wallet. Please try again.');
       this.showRestart = true;

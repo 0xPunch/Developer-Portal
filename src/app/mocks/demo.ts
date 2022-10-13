@@ -5,5 +5,6 @@ export enum Demos {
   wallet = 'wallet',
   payment = 'payment',
   sendmoney = 'sendmoney',
+  kyc = 'kyc',
   none = '',
 }
