@@ -11,8 +11,8 @@
     ></ui-input>
   </div>
 
-  <div class="py-4 max-w-xs">
-    <ui-input [config]="{
+  <div class="py-4 flex gap-4   ">
+    <ui-input class="max-w-xs flex-1  " [config]="{
       id: 'client_credentials',
       type: inputType.checkbox,
       initValue: application.use_credentials,
@@ -20,9 +20,12 @@
     }"
     (valueChange)="updateUseClientCredentials()"
     >
-
+    
     </ui-input>
+
   </div>
+
+  
 
   <div class="py-4 pr-20 relative">
     <ui-input

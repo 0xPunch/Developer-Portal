@@ -88,6 +88,8 @@ export class KYCComponent implements OnInit {
     };
 
     this.consoleEvent.emit(restart);
+
+    this.start();
   };
 
   ngOnInit() {
