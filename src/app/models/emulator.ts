@@ -4,8 +4,8 @@ export interface IEmulator {
   toggleApi: boolean;
   segment: IDemo; // Handle this so we can define specific segment in Peyya-application. egs. Create user, send money.
   config?: {
-    client_secret: string;
-    client_id: string;
+    clientsecret: string;
+    clientid: string;
     name?: string;
     ApiHost?: string;
     ApiEndpoints?: { [key: string]: string };

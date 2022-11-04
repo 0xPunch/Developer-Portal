@@ -28,8 +28,8 @@ export interface IGuide {
 }
 
 export interface IGuideConfig {
-  client_secret: string;
-  client_id: string;
+  clientsecret: string;
+  clientid: string;
   use_credentials?: boolean;
   name?: string;
   ApiHost?: string;

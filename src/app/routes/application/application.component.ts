@@ -72,8 +72,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.application = (response as IApplicationResponse)
           .applications as IApplication;
         this.guide = GuideMock({
-          client_secret: `${this.application?.client_secret}`,
-          client_id: `${this.application?.client_id}`,
+          clientsecret: `${this.application?.clientsecret}`,
+          clientid: `${this.application?.clientid}`,
           name: `${this.application.name}`,
           use_credentials: this.application.use_credentials,
           ApiHost,

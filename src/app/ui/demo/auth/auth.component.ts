@@ -130,7 +130,7 @@ export class AuthComponent implements OnInit {
 
     this.consoleEvent.emit(authorizingEvent);
     const app = this.appService.applicationBehavior$.value;
-    const { client_id, client_secret } = app;
+    const { clientid, clientsecret } = app;
     this.http
       .post(
         full,
@@ -139,8 +139,8 @@ export class AuthComponent implements OnInit {
         },
         {
           headers: {
-            client_id,
-            client_secret
+            clientid,
+            clientsecret
           },
         }
       )
@@ -178,7 +178,7 @@ export class AuthComponent implements OnInit {
 
     this.consoleEvent.emit(authorizingEvent);
     const app = this.appService.applicationBehavior$.value;
-    const { client_id, client_secret } = app;
+    const { clientid, clientsecret } = app;
     this.http
       .post(
         full,
@@ -188,8 +188,8 @@ export class AuthComponent implements OnInit {
         },
         {
           headers: {
-            client_id,
-            client_secret
+            clientid,
+            clientsecret
           },
         }
       )

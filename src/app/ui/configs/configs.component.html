@@ -2,10 +2,10 @@
   <div class="py-4">
     <ui-input
       [config]="{
-        id: 'client_id',
+        id: 'clientid',
         type: inputType.text,
         disabled: true,
-        initValue: application.client_id,
+        initValue: application.clientid,
         label: 'Client id'
       }"
     ></ui-input>
@@ -31,10 +31,10 @@
     <ui-input
     *ngIf="application.use_credentials"
       [config]="{
-        id: 'client_secret',
+        id: 'clientsecret',
         type: showSecret ? inputType.text : inputType.password,
         disabled: true,
-        initValue: application.client_secret,
+        initValue: application.clientsecret,
         label: 'Client secret'
       }"
     ></ui-input>

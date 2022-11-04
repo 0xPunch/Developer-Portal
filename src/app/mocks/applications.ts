@@ -5,15 +5,15 @@ export const ApplicationsMock: IApplication[] = [
   // {
   //   name: 'My first application',
   //   id: uuidv4(),
-  //   client_secret: uuidv4(),
-  //   client_id: uuidv4(),
+  //   clientsecret: uuidv4(),
+  //   clientid: uuidv4(),
   //   sandbox: true,
   // },
   // {
   //   name: 'My other application',
   //   id: uuidv4(),
-  //   client_secret: uuidv4(),
-  //   client_id: uuidv4(),
+  //   clientsecret: uuidv4(),
+  //   clientid: uuidv4(),
   //   sandbox: false,
   // },
 ];

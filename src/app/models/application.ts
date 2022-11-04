@@ -1,8 +1,8 @@
 export interface IApplication {
   name: string;
   id: string;
-  client_secret: string;
-  client_id: string;
+  clientsecret: string;
+  clientid: string;
   sandbox: boolean;
   use_credentials: boolean;
 }

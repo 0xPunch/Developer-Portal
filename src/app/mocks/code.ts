@@ -24,7 +24,7 @@ export const CodeMock = (config: IGuideConfig): ICode => {
     style: CodeStyles.default,
     snippet: `
       const config = {
-        client_id: "${config.client_id}"
+        clientid: "${config.clientid}"
       }
     `,
   };
@@ -37,15 +37,15 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
     snippet: `
 
       //# - Step 1
-      // Initate authorization by passing client_id in the headers
+      // Initate authorization by passing clientid in the headers
       // And phoneNumber in the body. Important with the format.
       const url = "${config.ApiHost}${config.ApiEndpoints?.['auth']}";
 
       ${ config.use_credentials ? `const config = {
-        client_id: "${config.client_id}",
-        client_secret: "${config.client_secret}"
+        clientid: "${config.clientid}",
+        clientsecret: "${config.clientsecret}"
       }` : `const validationConfig = {
-        client_id: "${config.client_id}"
+        clientid: "${config.clientid}"
       }` }
 
       const body = {
@@ -65,10 +65,10 @@ export const CodeAuthMock = (config: IGuideConfig): ICode => {
       const validationUrl = "${config.ApiHost}${config.ApiEndpoints?.['authValidate']}";
 
       ${ config.use_credentials ? `const validationConfig = {
-        client_id: "${config.client_id}",
-        client_secret: "${config.client_secret}"
+        clientid: "${config.clientid}",
+        clientsecret: "${config.clientsecret}"
       }` : `const validationConfig = {
-        client_id: "${config.client_id}"
+        clientid: "${config.clientid}"
       }` }
 
       const validationBody = {
