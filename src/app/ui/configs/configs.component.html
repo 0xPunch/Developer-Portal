@@ -1,11 +1,12 @@
 <form class="block" *ngIf="application">
+ 
   <div class="py-4">
     <ui-input
       [config]="{
         id: 'clientid',
         type: inputType.text,
         disabled: true,
-        initValue: application.clientid,
+        initValue: application.client_id,
         label: 'Client id'
       }"
     ></ui-input>
@@ -34,7 +35,7 @@
         id: 'clientsecret',
         type: showSecret ? inputType.text : inputType.password,
         disabled: true,
-        initValue: application.clientsecret,
+        initValue: application.client_secret,
         label: 'Client secret'
       }"
     ></ui-input>
